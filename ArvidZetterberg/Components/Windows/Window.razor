@@ -1,0 +1,120 @@
+﻿<div class="noselect window"
+	 style=@($@"{CalculateY()};
+	 {CalculateX()};
+	 z-index: {WindowContainer.GetZIndex(this)};
+	 {CalculateWidth()};
+	 {CalculateHeight()}")
+	 @onclick="SelectWindow">
+	<div class="window-drag-bar"
+		 draggable="true"
+		 @ondrag="HandleDrag"
+		 @ondragstart="HandleDragStart">
+	</div>
+	<div class="window-bar">
+		<span>@Content.Name</span>
+	</div>
+	<div class="window-content">
+		@if (Content is not null)
+		{
+			<DynamicComponent Type="@Content.type" Parameters="@Content.parameters" />
+		}
+	</div>
+	<div class="window-close">
+		<i class="far fa-window-maximize fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
+		<i class="fas fa-window-close fa-lg" alt="Close window button" @onclick="HandleClose"></i>
+	</div>
+	<div class="window-resize-x" draggable="true" @ondrag="HandleResizeX"></div>
+	<div class="window-resize-y" draggable="true" @ondrag="HandleResizeY"></div>
+	<div class="window-resize" draggable="true" @ondrag="HandleResizeXAndY"></div>
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback OnCloseWindow { get; set; }
+
+	[Parameter]
+	[EditorRequired]
+	public WindowContent Content { get; set; } = null!;
+
+	[CascadingParameter]
+	public WindowContainer WindowContainer { get; set; } = null!;
+
+	double left;
+	double top;
+	double width;
+	double height;
+
+	double mouseOffsetX = 0;
+	double mouseOffsetY = 0;
+	bool maximized = false;
+
+	protected override void OnInitialized()
+	{
+		left = Content.StartMeasuers.Left;
+		top = Content.StartMeasuers.Top;
+		width = Content.StartMeasuers.Width;
+		height = Content.StartMeasuers.Height;
+
+		WindowContainer.AddWindow(this);
+		base.OnInitialized();
+	}
+
+	void HandleDrag(DragEventArgs eventArgs)
+	{
+		if (IsDragFinished(eventArgs) == false)
+		{
+			left = eventArgs.PageX - mouseOffsetX;
+			top = eventArgs.PageY - mouseOffsetY;
+		}
+	}
+
+	void HandleDragStart(DragEventArgs eventArgs)
+	{
+		SelectWindow();
+		mouseOffsetX = eventArgs.OffsetX;
+		mouseOffsetY = eventArgs.OffsetY;
+	}
+
+	void SelectWindow() => WindowContainer.SelectWindow(this);
+
+	#region ResizeWindow
+	void HandleResizeXAndY(DragEventArgs eventArgs) => ResizeWindow(eventArgs, true, true);
+	void HandleResizeX(DragEventArgs eventArgs) => ResizeWindow(eventArgs, resizeX: true);
+	void HandleResizeY(DragEventArgs eventArgs) => ResizeWindow(eventArgs, resizeY: true);
+	void ResizeWindow(DragEventArgs eventArgs, bool resizeX = false, bool resizeY = false)
+	{
+		if (IsDragFinished(eventArgs))
+			return;
+
+		if (resizeX)
+		{
+			width += eventArgs.OffsetX;
+			if (width < 90)
+				width = 90;
+		}
+		
+		if (resizeY)
+		{
+			height += eventArgs.OffsetY;
+			if (height < 120)
+				height = 120;
+
+		}
+		SelectWindow();		
+	}
+	#endregion
+
+	void HandleClose()
+	{
+		WindowContainer.RemoveWindow(this);
+		OnCloseWindow.InvokeAsync();
+	}
+
+	private string CalculateX() => maximized ? "left: 0" : "left: " + left + "px";
+	private string CalculateY() => maximized ? "top: 0" : "top: " + top + "px";
+	private string CalculateWidth() => "width:" + (maximized ? "calc(100% - 1px)" : (width + "px"));
+	private string CalculateHeight() => "height:" + (maximized ? "calc(100% - 52px)" : (height + "px"));
+
+
+	bool IsDragFinished(DragEventArgs eventArgs) => eventArgs.PageX == 0 && eventArgs.PageY == 0; // Navie solution
+}

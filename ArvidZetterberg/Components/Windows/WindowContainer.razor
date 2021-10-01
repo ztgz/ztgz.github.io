@@ -1,0 +1,86 @@
+﻿@inject WindowStore WindowStore
+
+<CascadingValue Value="this">
+	@ChildContent
+</CascadingValue>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	public List<(Window window, int zIndex)> Windows { get; private set; } = new();
+
+	private int zIndex = 100000;
+	public void AddWindow(Window window)
+	{
+		zIndex++;
+		Windows.Add((window, zIndex));
+		WindowStore.SelectedWindow = window;
+	}
+
+	public int GetZIndex(Window window) 
+	{
+		try
+		{
+			return Windows.FirstOrDefault(w => w.window == window).zIndex;
+		}
+		catch
+		{
+			return 1;
+		}
+	}
+
+	public void SelectWindow(Window window)
+	{
+		try
+		{
+			var selected = Windows.FirstOrDefault(w => w.window == window && w.zIndex != zIndex);
+			// If current window has heighest z-value, dont adjust z-indexies, 
+			// zIndex of 0 equals no value found
+			if (selected.zIndex == 0)
+				return;
+
+			// Adjust z-idexies
+			for(int i = Windows.Count() - 1; i >= 0; i--)
+			{
+				var target = Windows[i];
+				if (target.window == window)
+					Windows[i] = new(target.window, zIndex);
+				else if (Windows[i].zIndex >= selected.zIndex)
+					Windows[i] = new(target.window, Windows[i].zIndex - 1);
+			}
+
+			WindowStore.SelectedWindow = window;
+		}
+		catch { }
+		StateHasChanged();
+	}
+
+	public void RemoveWindow(Window window)
+	{
+		try
+		{
+			var selected = Windows.FirstOrDefault(w => w.window == window && w.zIndex != zIndex);
+			// If current window has heighest z-value, dont adjust z-indexies, 
+			// zIndex of 0 equals no value found
+			if (selected.zIndex == 0)
+				return;
+
+			// Adjust z-idexies
+			for(int i = Windows.Count() - 1; i >= 0; i--)
+			{
+				var target = Windows[i];
+				if (target.window == window)
+					Windows.RemoveAt(i);
+				else if (Windows[i].zIndex >= selected.zIndex)
+					Windows[i] = new(target.window, Windows[i].zIndex - 1);
+			}
+
+			if (WindowStore.SelectedWindow == window)
+				WindowStore.SelectedWindow = null;
+
+		} 
+		catch {}
+		StateHasChanged();
+	}
+}

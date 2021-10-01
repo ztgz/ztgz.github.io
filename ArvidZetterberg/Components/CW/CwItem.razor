@@ -1,0 +1,32 @@
+﻿<div class="cw-container">
+	<div class="titles">
+		<h3>@Workplace</h3>
+		<h3>@DateText</h3>
+	</div>
+	<h4>@Position</h4>
+	<ul>
+		@foreach (var skill in Skills)
+		{
+			<li>@skill</li>
+		}
+	</ul>
+	@ChildContent
+</div>
+
+@code {
+	[Parameter]
+	public string DateText { get; set; } = string.Empty;
+
+	[Parameter]
+	public string Workplace { get; set; } = string.Empty;
+
+	[Parameter]
+	public string Position { get; set; } = string.Empty;
+
+	[Parameter]
+	public string[] Skills { get; set; } = new string[0];
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; } 
+
+}

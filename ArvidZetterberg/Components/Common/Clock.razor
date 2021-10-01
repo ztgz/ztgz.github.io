@@ -1,0 +1,23 @@
+﻿@implements IDisposable
+@using System.Timers
+
+<p class="clock noselect">
+	@DateTime.Now.ToString("HH:mm")
+</p>
+
+@code {
+	Timer timer = new Timer(1000);
+
+	protected override void OnInitialized()
+	{
+		timer.Elapsed += (object? sender, ElapsedEventArgs e) => InvokeAsync(StateHasChanged);
+		timer.AutoReset = true;
+		timer.Start();
+		base.OnInitialized();
+	}
+
+	public void Dispose()
+	{
+		timer.Dispose();
+	}
+}

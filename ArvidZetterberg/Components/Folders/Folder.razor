@@ -1,0 +1,9 @@
+﻿<div style="display: flex; flex-direction: row; gap: .8rem; flex-wrap: wrap; padding: .6rem;">
+	@ChildContent
+</div>
+
+@code {
+	[Parameter]
+	[EditorRequired]
+	public RenderFragment ChildContent { get; set; } = null!;
+}

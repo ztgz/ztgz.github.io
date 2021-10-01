@@ -1,0 +1,27 @@
+﻿@implements IDisposable
+@using System.Timers
+
+<h3>Effects</h3>
+<RainEffect />
+
+
+
+@code {
+	Timer timer = new Timer(30);
+
+	protected override void OnInitialized()
+	{
+		timer.Elapsed += (object? sender, ElapsedEventArgs e) =>
+		{
+			InvokeAsync(StateHasChanged);
+		};
+		timer.AutoReset = true;
+		timer.Start();
+		base.OnInitialized();
+	}
+
+	public void Dispose()
+	{
+		timer.Dispose();
+	}
+}

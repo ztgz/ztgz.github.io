@@ -1,0 +1,20 @@
+﻿@inject WindowStore WindowStore
+@implements IDisposable
+
+<div class="toolbar">
+	<div class="windows">
+		@foreach (var window in WindowStore.WindowContents)
+		{
+			<i class=@($"{(IsSelectedWindow(window) ? "fas" : "far")} {window?.Icon ?? "fa-window-restore"} fa-2x")></i>	
+		}
+	</div>
+	<Clock />
+</div>
+
+@code {
+	protected override void OnInitialized() => WindowStore.Subscribe(StateHasChanged);
+
+	public void Dispose() => WindowStore.Unsubscribe(StateHasChanged);
+
+	bool IsSelectedWindow(WindowContent window) => WindowStore.SelectedWindow?.Content.Id == window.Id;
+}

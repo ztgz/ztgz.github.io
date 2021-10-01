@@ -1,0 +1,9 @@
+﻿<Folder>
+	<IconLink ContentType="typeof(CW)" Name="CW" />
+	<IconLink ContentType="typeof(EducationCW)" Name="Education" />
+</Folder>
+@code {
+	[Parameter]
+	[EditorRequired]
+	public EventCallback<WindowContent> OnWindowOpen { get; set; }
+}

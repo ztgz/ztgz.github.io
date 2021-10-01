@@ -1,0 +1,59 @@
+﻿@inject WindowStore WindowStore
+@implements IDisposable
+
+<div class="icon-link" @onclick="HandleIconClick">
+	@if (WindowStore.SelectedIcon == this)
+	{
+		<i class=@($"fas {Icon} fa-3x")></i>
+	}
+	else
+	{
+		<i class=@($"far {Icon} fa-3x")></i>
+	}
+	<p class="noselect">@Name</p>
+</div>
+
+@code {
+	[Parameter]
+	[EditorRequired]
+	public Type ContentType { get; set; } = null!;
+
+	[Parameter]
+	public Dictionary<string, object> TypeParams { get; set; } = new();
+
+	[Parameter]
+	[EditorRequired]
+	public string Name { get; set; } = string.Empty;
+
+	[Parameter]
+	public string Icon { get; set; } = "fa-file-word";
+
+	[Parameter]
+	public WindowStartMeasures WindowStartMeasures { get; set; } = new();
+
+	protected override void OnInitialized() => WindowStore.Subscribe(StateHasChanged);
+
+	async Task HandleIconClick()
+	{
+		if (WindowStore.SelectedIcon == this)
+		{
+			// Delay action temporarly to end click on other components like window
+			await Task.Delay(50);
+			WindowContent content = new(ContentType, TypeParams)
+			{
+				Name = Name,
+				Icon = Icon,
+				StartMeasuers = WindowStartMeasures
+			};
+
+			WindowStore.AddWindow(content);
+			WindowStore.SelectedIcon = null;
+		}
+		else
+		{
+			WindowStore.SelectedIcon = this;
+		}
+	}
+
+	public void Dispose() => WindowStore.Unsubscribe(StateHasChanged);
+}

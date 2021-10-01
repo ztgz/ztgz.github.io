@@ -1,0 +1,86 @@
+﻿div {
+    --window-bar-height: 30px;
+    --window-resize-z-index: 100000;
+    --window-button-z-index: 100001;
+}
+
+.window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: darkblue;
+    border: 3px solid darkblue;
+}
+
+.window-bar {
+    width: 100%;
+    height: var(--window-bar-height);
+    background-color: darkblue;
+    display: flex;
+    align-items: center;
+}
+
+    .window-bar > span {
+        color: #fffaf0;
+        padding-left: .6rem;
+    }
+
+.window-drag-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--window-bar-height);
+    z-index: var(--window-resize-z-index);
+}
+
+.window-drag-bar:hover
+{
+    cursor: grab;
+}
+
+.window-close {
+    position: absolute;
+    top: 5px;
+    right: 4px;
+    color: gray;
+    cursor: pointer;
+    z-index: var(--window-button-z-index)
+}
+
+.window-content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+}
+
+.window-resize {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    cursor: nw-resize;
+    z-index: var(--window-resize-z-index);
+}
+
+.window-resize-x {
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 10px;
+    height: 100%;
+    cursor: e-resize;
+    z-index: var(--window-resize-z-index);
+}
+
+.window-resize-y {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    cursor: n-resize;
+    z-index: var(--window-resize-z-index);
+}
