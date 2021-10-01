@@ -1,0 +1,50 @@
+﻿<div class="loading-area-frame" style="background: @color;">
+    <div class="loading">
+        @for(int i = 1; i <= cubeCount; i++)
+        {
+            var bindIndex = i;
+            <div class="cube" id="@($"cube-{i}")" 
+                @onclick="@(() => { Toogle(bindIndex-1); })"
+                style="@(paused[i-1] ? "animation-play-state: paused;" : "") cursor: pointer;">
+                <div class="cube-surface cube-front"></div>
+                <div class="cube-surface cube-right"></div>
+                <div class="cube-surface cube-back"></div>
+                <div class="cube-surface cube-left"></div>
+                <div class="cube-surface cube-top"></div>
+                <div class="cube-surface cube-bottom"></div>
+            </div>
+
+        }
+    </div>
+    <div class="color-picker">
+        @foreach(var col in colors)
+        {
+            <div class="color-picker-color" style="background: @col;"
+                @onclick="@(() => SetColor(col))"></div>
+        }
+    </div>
+</div>
+
+@code {
+    int cubeCount = 3;
+    string color = "#00008B";
+    string[] colors = new string[]
+        {
+            "#00008B",
+            "#556B2F",
+            "#FF0000",
+            "#800080",
+            "#000000"
+        };
+    
+    bool[] paused = null!;
+
+    protected override void OnInitialized() => paused = new bool[cubeCount];
+
+    public void SetColor(string col) => color = col;
+
+    public void Toogle(int index){
+        paused[index] = !paused[index];
+        Console.WriteLine("Paused");
+    }
+}
