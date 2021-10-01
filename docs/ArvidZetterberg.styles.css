@@ -27,6 +27,21 @@
 h4[b-8e03easax1] {
     margin-block-start: .8rem;
 }
+/* /Components/Fun/SpinningCubes.razor.rz.scp.css */
+.color-picker[b-4i99j529yi] {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.color-picker-color[b-4i99j529yi] {
+    width: 30px;
+    height: 30px;
+    border: 5px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+}
 /* /Components/Windows/IconLink.razor.rz.scp.css */
 .icon-link[b-d5cq4f9gw4] {
     width: 50px;
