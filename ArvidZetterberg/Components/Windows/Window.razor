@@ -20,7 +20,7 @@
 		}
 	</div>
 	<div class="window-close">
-		<i class="far fa-window-maximize fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
+		<i class="far @(maximized ? "fa-window-restore" : "fa-window-maximize") fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
 		<i class="fas fa-window-close fa-lg" alt="Close window button" @onclick="HandleClose"></i>
 	</div>
 	<div class="window-resize-x" draggable="true" @ondrag="HandleResizeX"></div>
