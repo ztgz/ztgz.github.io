@@ -1,7 +1,13 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@inject IJSRuntime jsRuntime
+@inject WindowStore WindowStore
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        @if (isLoaded)
+        {
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        }
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -10,3 +16,15 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    bool isLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var isMobile = await jsRuntime.InvokeAsync<bool>("isMobile");
+        WindowStore.IsMobile = isMobile;
+        isLoaded = true;
+        await base.OnInitializedAsync();
+    }
+}

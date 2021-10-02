@@ -47,6 +47,17 @@ namespace ArvidZetterberg.Store
                 InvokeUpdates();
 			} 
         }
+
+        private bool isMobile = false;
+        public bool IsMobile
+        {
+            get => isMobile;
+            set 
+            {
+                isMobile = value;
+                InvokeUpdates();
+            }
+        }
     }
 
 }

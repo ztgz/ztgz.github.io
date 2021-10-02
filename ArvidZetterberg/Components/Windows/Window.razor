@@ -1,4 +1,6 @@
-﻿<div class="noselect window"
+﻿@inject WindowStore WindowStore
+
+<div class="noselect window"
 	 style=@($@"{CalculateY()};
 	 {CalculateX()};
 	 z-index: {WindowContainer.GetZIndex(this)};
@@ -54,6 +56,8 @@
 		top = Content.StartMeasuers.Top;
 		width = Content.StartMeasuers.Width;
 		height = Content.StartMeasuers.Height;
+
+		maximized = WindowStore.IsMobile;
 
 		WindowContainer.AddWindow(this);
 		base.OnInitialized();
