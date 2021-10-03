@@ -3,7 +3,7 @@
   "config": [ ],
   "debugBuild": false,
   "entryAssembly": "ArvidZetterberg",
-  "icuDataMode": 0,
+  "icuDataMode": 2,
   "linkerEnabled": true,
   "resources": {
     "assembly": {
@@ -34,7 +34,7 @@
       "System.Net.Http.dll": "sha256-UGUSGUCy3XAbFtAh+Hgwwej6TRfwvfR1joc+dHfy4IU=",
       "System.Net.Primitives.dll": "sha256-HaLvVxJy6WcM7dMUK\/SToc0mF6LhQ3MrOyk\/mipoqA0=",
       "System.ObjectModel.dll": "sha256-7ajTvceCeaEMhZjzPEM3sfowssLPXYDmyBrUX6d\/tR4=",
-      "System.Private.CoreLib.dll": "sha256-roPxRGF80RLhNB75k0ZUv72HxiWa5I3EIHl4qRk5I10=",
+      "System.Private.CoreLib.dll": "sha256-EguYb0oMWN\/b3Q8XPJ\/9fvIf50HJq9zHtpA4xBLOr\/w=",
       "System.Private.Runtime.InteropServices.JavaScript.dll": "sha256-E9nagDS6PcCYVuEB+g6e9JFcsNCIWOGua\/mssJBKqbE=",
       "System.Private.Uri.dll": "sha256-1HNG0J8tR+mi5qqhBpe\/xxgOnr2EvX7MnRZuEqCMXmc=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-tSNaVGPQML0iJI0mqxUKZWUDlTPdOHPyHirj7F4qsJc=",
@@ -49,10 +49,6 @@
     "runtime": {
       "dotnet.timezones.blat": "sha256-IRA3aSR05YjbbkfXMY8trRnmm9TfDlmrKiB4EPRl16I=",
       "dotnet.wasm": "sha256-1Qbl2oLjBqIKta0l6OQZQH03S0ZS\/S9M18GsKlAnhuQ=",
-      "icudt_CJK.dat": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
-      "icudt_EFIGS.dat": "sha256-4RwaPx87Z4dvn77ie\/ro3\/QzyS+\/gGmO3Y\/0CSAXw4k=",
-      "icudt_no_CJK.dat": "sha256-OxylFgLJlFqixsj+nLxYVsv5iZLvfIKMpLf9hrWaChA=",
-      "icudt.dat": "sha256-Zuq0dWAsBm6\/2lSOsz7+H9PvFaRn61KIXHMMwXDfvyE=",
       "dotnet.6.0.0-rc.1.21451.13.js": "sha256-RS\/WM87Hara\/ZlG0voKbotMD2AFuRP1ni1GOonhRzCI="
     },
     "satelliteResources": null
