@@ -5,9 +5,7 @@
 <WindowContainer>
 	@foreach (var window in WindowStore.WindowContents)
 	{
-		<Window Content="window" 
-			OnCloseWindow="() => WindowStore.RemoveWindow(window)" 
-			@key="window.Id" />
+		<Window Content="window" @key="window.Id" />
 	}
 </WindowContainer>
 

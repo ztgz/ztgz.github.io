@@ -1,4 +1,6 @@
 ﻿@inject WindowStore WindowStore
+@inject WindowMessageService WindowMessageService
+@implements IDisposable
 
 <CascadingValue Value="this">
 	@ChildContent
@@ -10,6 +12,8 @@
 
 	public List<(Window window, int zIndex)> Windows { get; private set; } = new();
 
+	protected override void OnInitialized() => WindowMessageService.Subscribe(HandleWindowMessages);
+
 	private int zIndex = 100000;
 	public void AddWindow(Window window)
 	{
@@ -18,51 +22,50 @@
 		WindowStore.SelectedWindow = window;
 	}
 
-	public int GetZIndex(Window window) 
+	public int GetZIndex(Window window) => Windows.FirstOrDefault(w => w.window == window).zIndex;
+
+	void HandleWindowMessages(WindowMessage message)
 	{
-		try
-		{
-			return Windows.FirstOrDefault(w => w.window == window).zIndex;
-		}
-		catch
-		{
-			return 1;
-		}
+		if (message is FocusWindowMsg)
+			FocusOnWindow(message.WindowContent);
+		else if (message is RemoveWindowMsg)
+			FocusOnWindow(message.WindowContent);
 	}
 
-	public void SelectWindow(Window window)
+	void FocusOnWindow(WindowContent content)
 	{
+		// If current window has heighest z-value, dont adjust z-indexies, 
+		// zIndex of 0 equals no value found
+		var selected = Windows.FirstOrDefault(w => w.window.Content == content && w.zIndex != zIndex);
+		if (selected.zIndex == 0)
+			return;
+
 		try
 		{
-			var selected = Windows.FirstOrDefault(w => w.window == window && w.zIndex != zIndex);
-			// If current window has heighest z-value, dont adjust z-indexies, 
-			// zIndex of 0 equals no value found
-			if (selected.zIndex == 0)
-				return;
-
 			// Adjust z-idexies
 			for(int i = Windows.Count() - 1; i >= 0; i--)
 			{
 				var target = Windows[i];
-				if (target.window == window)
+				if (target.window == selected.window)
 					Windows[i] = new(target.window, zIndex);
 				else if (Windows[i].zIndex >= selected.zIndex)
 					Windows[i] = new(target.window, Windows[i].zIndex - 1);
 			}
 
-			WindowStore.SelectedWindow = window;
+			// Set window as selected
+			WindowStore.SelectedWindow = selected.window;
 		}
 		catch { }
 		StateHasChanged();
 	}
 
-	public void RemoveWindow(Window window)
+	void RemoveWindow(WindowContent content)
 	{
 		try
 		{
-			var selected = Windows.FirstOrDefault(w => w.window == window && w.zIndex != zIndex);
 			// If current window has heighest z-value, dont adjust z-indexies, 
 			// zIndex of 0 equals no value found
+			var selected = Windows.FirstOrDefault(w => w.window.Content == content && w.zIndex != zIndex);
 			if (selected.zIndex == 0)
 				return;
 
@@ -70,17 +73,18 @@
 			for(int i = Windows.Count() - 1; i >= 0; i--)
 			{
 				var target = Windows[i];
-				if (target.window == window)
+				if (target.window == selected.window)
 					Windows.RemoveAt(i);
 				else if (Windows[i].zIndex >= selected.zIndex)
 					Windows[i] = new(target.window, Windows[i].zIndex - 1);
 			}
 
-			if (WindowStore.SelectedWindow == window)
+			if (WindowStore.SelectedWindow == selected.window)
 				WindowStore.SelectedWindow = null;
-
 		} 
 		catch {}
 		StateHasChanged();
 	}
+
+	public void Dispose() => WindowMessageService.Unsubscribe(HandleWindowMessages);
 }

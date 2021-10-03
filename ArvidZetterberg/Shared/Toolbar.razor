@@ -1,11 +1,14 @@
 ﻿@inject WindowStore WindowStore
+@inject WindowMessageService WindowMessageService
 @implements IDisposable
 
 <div class="toolbar">
 	<div class="windows">
 		@foreach (var window in WindowStore.WindowContents)
 		{
-			<i class=@($"{(IsSelectedWindow(window) ? "fas" : "far")} {window?.Icon ?? "fa-window-restore"} fa-2x")></i>	
+			<i class=@($"{(IsSelectedWindow(window) ? "fas" : "far")} {window?.Icon ?? "fa-window-restore"} fa-2x")
+				@onclick="@(() => FocusOnWindow(window))">
+			</i>	
 		}
 	</div>
 	<Clock />
@@ -17,4 +20,10 @@
 	public void Dispose() => WindowStore.Unsubscribe(StateHasChanged);
 
 	bool IsSelectedWindow(WindowContent window) => WindowStore.SelectedWindow?.Content.Id == window.Id;
+
+	void FocusOnWindow(WindowContent? window) 
+	{
+		if (window is not null)
+			WindowMessageService.FocusWindow(window);
+	}
 }
