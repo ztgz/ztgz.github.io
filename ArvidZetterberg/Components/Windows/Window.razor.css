@@ -39,13 +39,17 @@
     cursor: grab;
 }
 
-.window-close {
+.window-icons {
     position: absolute;
     top: 5px;
     right: 4px;
     color: gray;
     cursor: pointer;
-    z-index: var(--window-button-z-index)
+    z-index: var(--window-button-z-index);
+}
+
+.window-icons > i {
+    margin-left: 4px;
 }
 
 .window-content {

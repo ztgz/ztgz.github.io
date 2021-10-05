@@ -1,35 +1,40 @@
 ﻿@inject WindowStore WindowStore
 @inject WindowMessageService WindowMessageService
+@implements IDisposable
 
-<div class="noselect window"
+@if (visible)
+{
+	<div class="noselect window"
 	 style=@($@"{CalculateY()};
 	 {CalculateX()};
 	 z-index: {WindowContainer.GetZIndex(this)};
 	 {CalculateWidth()};
 	 {CalculateHeight()}")
 	 @onclick="SelectWindow">
-	<div class="window-drag-bar"
+		<div class="window-drag-bar"
 		 draggable="true"
 		 @ondrag="HandleDrag"
 		 @ondragstart="HandleDragStart">
+		</div>
+		<div class="window-bar">
+			<span>@Content.Name</span>
+		</div>
+		<div class="window-content">
+			@if (Content is not null)
+			{
+				<DynamicComponent Type="@Content.type" Parameters="@Content.parameters" />
+			}
+		</div>
+		<div class="window-icons">
+			<i class="fas fa-window-minimize fa-lg" alt="Mimimize window" @onclick="@(MinimizeWindow)"></i>
+			<i class="far @(maximized ? "fa-window-restore" : "fa-window-maximize") fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
+			<i class="fas fa-window-close fa-lg" alt="Close window button" @onclick="HandleClose"></i>
+		</div>
+		<div class="window-resize-x" draggable="true" @ondrag="HandleResizeX"></div>
+		<div class="window-resize-y" draggable="true" @ondrag="HandleResizeY"></div>
+		<div class="window-resize" draggable="true" @ondrag="HandleResizeXAndY"></div>
 	</div>
-	<div class="window-bar">
-		<span>@Content.Name</span>
-	</div>
-	<div class="window-content">
-		@if (Content is not null)
-		{
-			<DynamicComponent Type="@Content.type" Parameters="@Content.parameters" />
-		}
-	</div>
-	<div class="window-close">
-		<i class="far @(maximized ? "fa-window-restore" : "fa-window-maximize") fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
-		<i class="fas fa-window-close fa-lg" alt="Close window button" @onclick="HandleClose"></i>
-	</div>
-	<div class="window-resize-x" draggable="true" @ondrag="HandleResizeX"></div>
-	<div class="window-resize-y" draggable="true" @ondrag="HandleResizeY"></div>
-	<div class="window-resize" draggable="true" @ondrag="HandleResizeXAndY"></div>
-</div>
+}
 
 @code {
 	[Parameter]
@@ -47,6 +52,7 @@
 	double mouseOffsetX = 0;
 	double mouseOffsetY = 0;
 	bool maximized = false;
+	bool visible = true;
 
 	protected override void OnInitialized()
 	{
@@ -58,7 +64,14 @@
 		maximized = WindowStore.IsMobile;
 
 		WindowContainer.AddWindow(this);
+		WindowMessageService.Subscribe(HandleMessages);
 		base.OnInitialized();
+	}
+
+	void HandleMessages(WindowMessage msg)
+	{
+		if (msg is FocusWindowMsg && msg.WindowContent.Id == Content.Id)
+			visible = true;
 	}
 
 	void HandleDrag(DragEventArgs eventArgs)
@@ -112,11 +125,19 @@
 		WindowStore.RemoveWindow(Content);
 	}
 
+	void MinimizeWindow()
+	{
+		visible = false;
+		if (WindowStore.SelectedWindow == this)
+			WindowStore.SelectedWindow = null;
+	}
+
 	private string CalculateX() => maximized ? "left: 0" : "left: " + left + "px";
 	private string CalculateY() => maximized ? "top: 0" : "top: " + top + "px";
 	private string CalculateWidth() => "width:" + (maximized ? "calc(100% - 1px)" : (width + "px"));
 	private string CalculateHeight() => "height:" + (maximized ? "calc(100% - 52px)" : (height + "px"));
 
-
 	bool IsDragFinished(DragEventArgs eventArgs) => eventArgs.PageX == 0 && eventArgs.PageY == 0; // Navie solution
+
+	public void Dispose() => WindowMessageService.Unsubscribe(HandleMessages);
 }
