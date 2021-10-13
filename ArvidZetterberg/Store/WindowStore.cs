@@ -1,4 +1,5 @@
 ﻿using ArvidZetterberg.Components.Common;
+using ArvidZetterberg.Components.Metorids;
 using ArvidZetterberg.Components.Windows;
 
 namespace ArvidZetterberg.Store
@@ -19,6 +20,13 @@ namespace ArvidZetterberg.Store
         public List<WindowContent> WindowContents { get; private set; } = new List<WindowContent>()
         {
             new WindowContent(typeof(Help), new Dictionary<string, object>(){ })
+            {
+                Icon = "fa-question-circle",
+                Name = "Help",
+                StartMeasuers = new() { Width = 400, Height = 400 }
+            },
+
+            new WindowContent(typeof(Metroids), new Dictionary<string, object>(){ })
             {
                 Icon = "fa-question-circle",
                 Name = "Help",

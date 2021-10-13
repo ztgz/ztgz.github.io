@@ -1,0 +1,87 @@
+﻿@implements IDisposable
+
+<div class="background"> 
+	<input style="width: 100%; height: 100%; opacity: 0;" type="text" @onkeydown="KeyPressed" @onkeyup="KeyUp" @onblur="ResetKeys" />
+	<Ship Core="shipCore" />
+</div>
+
+@code {
+	GameLoop gameLoop = null!;
+	ShipCore shipCore = new();
+
+	protected override Task OnInitializedAsync()
+	{
+		gameLoop = new();
+		gameLoop.AddToUpdate(OnUpdate);
+		return base.OnInitializedAsync();
+	}
+
+	void OnUpdate(double elapsedMilliseconds)
+	{
+		SetShipDirections();
+		shipCore.Update(elapsedMilliseconds);
+		InvokeAsync(StateHasChanged);
+	}
+
+	
+	// TODO MOVE KEY LOGIC SOMEWHERE ELSE
+	bool downPressed = false;
+	bool upPressed = false;
+	bool leftPressed = false;
+	bool rightPressed = false;
+
+	void KeyPressed(KeyboardEventArgs eventArgs)
+	{
+		if (eventArgs.Key == "ArrowDown")
+			downPressed = true;
+		if (eventArgs.Key == "ArrowUp")
+			upPressed = true;
+		if (eventArgs.Key == "ArrowLeft")
+			leftPressed = true;
+		if (eventArgs.Key == "ArrowRight")
+			rightPressed = true;
+	}
+
+	void KeyUp(KeyboardEventArgs eventArgs)
+	{
+		if (eventArgs.Key == "ArrowDown")
+			downPressed = false;
+		if (eventArgs.Key == "ArrowUp")
+			upPressed = false;
+		if (eventArgs.Key == "ArrowLeft")
+			leftPressed = false;
+		if (eventArgs.Key == "ArrowRight")
+			rightPressed = false;	
+	}
+
+	void ResetKeys()
+	{
+		downPressed = false;
+		upPressed = false;
+		rightPressed = false;
+		leftPressed = false;
+	}
+
+	void SetShipDirections()
+	{
+		shipCore.SetYDirection((downPressed, upPressed) switch
+		{
+			(true, false) => ShipCore.YDirection.Down,
+			(false, true) => ShipCore.YDirection.Up,
+			_ => ShipCore.YDirection.None
+		});
+
+		shipCore.SetXDirection((leftPressed, rightPressed) switch
+		{
+			(true, false) => ShipCore.XDirection.Left,
+			(false, true) => ShipCore.XDirection.Right,
+			_ => ShipCore.XDirection.None
+		});
+	}
+
+	public void Dispose()
+	{
+		gameLoop.RemoveFromUpdate(OnUpdate);
+		gameLoop.Dispose();
+	}
+}
