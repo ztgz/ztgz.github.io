@@ -10,6 +10,7 @@
     flex-direction: column;
     background-color: darkblue;
     border: 3px solid darkblue;
+    min-width: 200px;
 }
 
 .window-bar {
