@@ -53,8 +53,8 @@
     <script>
         window.isMobile = () => /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
     </script>
-    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
-    <script type="module">
+    <script src="_framework/blazor.webassembly.js" autostart="true"></script>
+    <!-- <script type="module">
         import { BrotliDecode } from './js/decode.min.js';
         Blazor.start({
             loadBootResource: function (type, name, defaultUri, integrity) {
@@ -75,7 +75,7 @@
                 }
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>
