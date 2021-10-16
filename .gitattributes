@@ -63,3 +63,5 @@
 #*.RTF   diff=astextplain
 
 docs/* binary
+
+docs/_framework/*.js binary
