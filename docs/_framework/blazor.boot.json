@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "ArvidZetterberg.dll": "sha256-iPVnwFwDK2TxzAttcZPlqOSy\/WsxZ5toKTz0Z9cx5jc=",
+      "ArvidZetterberg.dll": "sha256-bNNn8EsreUpXOU2iRkW8JJzh\/0oSvo7b3+TFNumX4NY=",
       "Microsoft.AspNetCore.Components.dll": "sha256-OqLImDRpID74A1QuKEvoESjd1IPPgnbllRJy9ovt0I8=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-ws8Lfo7RElj2o+N1ylrH2vMTNs5i8Ov5DB1I9GRmPBo=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-zDm1W+8xhczn35jGLuz5LXoFyoy4qDZrLxHkPX5VLW8=",
@@ -47,7 +47,7 @@
     "libraryInitializers": null,
     "pdb": null,
     "runtime": {
-      "dotnet.6.0.0-rc.2.21480.5.frn33bekre.js": "sha256-7jxXMA5+EXSLLmH2xLN7VhzUBC/RzB5mxGMIlthHpVk=",
+      "dotnet.6.0.0-rc.2.21480.5.frn33bekre.js": "sha256-ljR5MRt9dbULozmn966bdMSj6Yym9CHBnk6PffK+rF0=",
       "dotnet.timezones.blat": "sha256-XJHB3t8X\/DZEszOKBnohw4+\/czkl5H009EtaewxP0bY=",
       "dotnet.wasm": "sha256-8RaZ4i2Bd1sv7HcTO2BxPWq2AbD5Y5EPPoiME9lrWkU="
     },
