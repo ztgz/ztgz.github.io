@@ -4,13 +4,15 @@
 		<h3>@DateText</h3>
 	</div>
 	<h4>@Position</h4>
+	<div class="content">
+		@ChildContent
+	</div>
 	<ul>
 		@foreach (var skill in Skills)
 		{
 			<li>@skill</li>
 		}
 	</ul>
-	@ChildContent
 </div>
 
 @code {
