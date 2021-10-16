@@ -64,4 +64,4 @@
 
 docs/* binary
 
-docs/_framework/*.js binary
+docs/_framework/*.js eol=lf
