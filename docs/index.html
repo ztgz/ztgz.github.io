@@ -1,81 +1,12 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>ArvidZetterberg</title>
-    <base href="/" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="css/all.min.css" rel="stylesheet" />
-
-    <link href="ArvidZetterberg.styles.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-
 <body>
-    <div id="app">
-        <div class="loading-area">
-            <div class="loading">
-                <div class="cube" id="cube-1">
-                    <div class="cube-surface cube-front"></div>
-                    <div class="cube-surface cube-right"></div>
-                    <div class="cube-surface cube-back"></div>
-                    <div class="cube-surface cube-left"></div>
-                    <div class="cube-surface cube-top"></div>
-                    <div class="cube-surface cube-bottom"></div>
-                </div>
-                <div class="cube" id="cube-2">
-                    <div class="cube-surface cube-front"></div>
-                    <div class="cube-surface cube-right"></div>
-                    <div class="cube-surface cube-back"></div>
-                    <div class="cube-surface cube-left"></div>
-                    <div class="cube-surface cube-top"></div>
-                    <div class="cube-surface cube-bottom"></div>
-                </div>
-                <div class="cube" id="cube-3">
-                    <div class="cube-surface cube-front"></div>
-                    <div class="cube-surface cube-right"></div>
-                    <div class="cube-surface cube-back"></div>
-                    <div class="cube-surface cube-left"></div>
-                    <div class="cube-surface cube-top"></div>
-                    <div class="cube-surface cube-bottom"></div>
-                </div>
-            </div>
-            <h1>Loding desktop, please wait...</h1>
-        </div>
-    </div>
-
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
-    <script>
-        window.isMobile = () => /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
-    </script>
-    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
-    <script type="module">
-        import { BrotliDecode } from './js/decode.min.js';
-        Blazor.start({
-            loadBootResource: function (type, name, defaultUri, integrity) {
-                if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
-                    return (async function () {
-                        const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
-                        if (!response.ok) {
-                            throw new Error(response.statusText);
-                        }
-                        const originalResponseBuffer = await response.arrayBuffer();
-                        const originalResponseArray = new Int8Array(originalResponseBuffer);
-                        const decompressedResponseArray = BrotliDecode(originalResponseArray);
-                        const contentType = type ===
-                            'dotnetwasm' ? 'application/wasm' : 'application/octet-stream';
-                        return new Response(decompressedResponseArray,
-                            { headers: { 'content-type': contentType } });
-                    })();
-                }
-            }
-        });
-    </script>
+    <p>TEst</p>
 </body>
-
 </html>
