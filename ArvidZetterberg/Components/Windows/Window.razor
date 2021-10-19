@@ -30,8 +30,10 @@
 			<i class="far @(maximized ? "fa-window-restore" : "fa-window-maximize") fa-lg" alt="Maximize window" @onclick="@(() => maximized = !maximized)"></i>
 			<i class="fas fa-window-close fa-lg" alt="Close window button" @onclick="HandleClose"></i>
 		</div>
-		<div class="window-resize-x" draggable="true" @ondrag="HandleResizeX"></div>
-		<div class="window-resize-y" draggable="true" @ondrag="HandleResizeY"></div>
+		<div class="window-resize-y" draggable="true" @ondrag="@((DragEventArgs args) => ResizeWindow(args, resizeY: true, isStart: false))"></div>
+		<div class="window-resize-x" draggable="true" @ondrag="@((DragEventArgs args) => ResizeWindow(args, resizeX: true, isStart: false))"></div>
+		<div class="window-resize-y-min" draggable="true" @ondrag="@((DragEventArgs args) => ResizeWindow(args, resizeY: true, isStart: true))"></div>
+		<div class="window-resize-x-min" draggable="true" @ondrag="@((DragEventArgs args) => ResizeWindow(args, resizeX: true, isStart: true))"></div>
 		<div class="window-resize" draggable="true" @ondrag="HandleResizeXAndY"></div>
 	</div>
 }
@@ -94,28 +96,38 @@
 
 	#region ResizeWindow
 	void HandleResizeXAndY(DragEventArgs eventArgs) => ResizeWindow(eventArgs, true, true);
-	void HandleResizeX(DragEventArgs eventArgs) => ResizeWindow(eventArgs, resizeX: true);
-	void HandleResizeY(DragEventArgs eventArgs) => ResizeWindow(eventArgs, resizeY: true);
-	void ResizeWindow(DragEventArgs eventArgs, bool resizeX = false, bool resizeY = false)
+	void ResizeWindow(DragEventArgs eventArgs, bool resizeX = false, bool resizeY = false, bool isStart = false)
 	{
 		if (IsDragFinished(eventArgs))
 			return;
 
 		if (resizeX)
-		{
-			width += eventArgs.OffsetX;
-			if (width < 90)
-				width = 90;
-		}
-		
-		if (resizeY)
-		{
-			height += eventArgs.OffsetY;
-			if (height < 120)
-				height = 120;
+			ResizeX(eventArgs, isStart);
 
-		}
+		if (resizeY)
+			ResizeY(eventArgs, isStart);
+	
 		SelectWindow();		
+	}
+
+	void ResizeX(DragEventArgs eventArgs, bool resizeLeft = false)
+	{
+		width += (resizeLeft ? -eventArgs.OffsetX : eventArgs.OffsetX);
+
+		if (width < 200)
+			width = 200;
+		else if (resizeLeft)
+			left += eventArgs.OffsetX;
+	}
+
+	void ResizeY(DragEventArgs eventArgs, bool resizeTop = false)
+	{
+		height += (resizeTop ? -eventArgs.OffsetY : eventArgs.OffsetY);
+
+		if (height < 120)
+			height = 120;
+		else if (resizeTop)
+			top += eventArgs.OffsetY;
 	}
 	#endregion
 

@@ -1,0 +1,13 @@
+﻿.content {
+    padding: 0.3rem 0.6rem;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 20%;
+    border: 3px solid black;
+    background-color: black;
+}

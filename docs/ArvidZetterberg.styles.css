@@ -6,10 +6,23 @@
 .help-container[b-hutjpaedeq] {
     padding: .2rem .6rem;
 }
+/* /Components/CW/AboutMe.razor.rz.scp.css */
+.content[b-lg8gnj341t] {
+    padding: 0.3rem 0.6rem;
+    text-align: center;
+}
+
+.profile-picture[b-lg8gnj341t] {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 20%;
+    border: 3px solid black;
+    background-color: black;
+}
 /* /Components/CW/CwItem.razor.rz.scp.css */
 .cw-container[b-8e03easax1] {
     padding: .2rem .6rem;
-    margin-bottom: .4rem;
     border-bottom: 1px solid grey;
 }
 
@@ -22,6 +35,10 @@
 
 .titles > h3[b-8e03easax1] {
     margin-block-end: 0.2rem;
+}
+
+.content[b-8e03easax1] {
+    padding: 0 .4rem;
 }
 
 h4[b-8e03easax1] {
@@ -68,6 +85,7 @@ div[b-7s88eiu98j] {
     flex-direction: column;
     background-color: darkblue;
     border: 3px solid darkblue;
+    min-width: 200px;
 }
 
 .window-bar[b-7s88eiu98j] {
@@ -97,13 +115,17 @@ div[b-7s88eiu98j] {
     cursor: grab;
 }
 
-.window-close[b-7s88eiu98j] {
+.window-icons[b-7s88eiu98j] {
     position: absolute;
     top: 5px;
     right: 4px;
     color: gray;
     cursor: pointer;
-    z-index: var(--window-button-z-index)
+    z-index: var(--window-button-z-index);
+}
+
+.window-icons > i[b-7s88eiu98j] {
+    margin-left: 4px;
 }
 
 .window-content[b-7s88eiu98j] {
@@ -133,9 +155,30 @@ div[b-7s88eiu98j] {
     z-index: var(--window-resize-z-index);
 }
 
+.window-resize-x-min[b-7s88eiu98j] {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 10px;
+    height: 100%;
+    cursor: e-resize;
+    z-index: var(--window-resize-z-index);
+}
+
+
 .window-resize-y[b-7s88eiu98j] {
     position: absolute;
     bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    cursor: n-resize;
+    z-index: var(--window-resize-z-index);
+}
+
+.window-resize-y-min[b-7s88eiu98j] {
+    position: absolute;
+    top: -4px;
     left: 0;
     width: 100%;
     height: 10px;
