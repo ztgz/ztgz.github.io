@@ -1,0 +1,8 @@
+﻿<div class="cloud" style="@($"position: absolute; color: white; {((IPosition)Core).CssPosition()}")">
+
+</div>
+@code {
+	[Parameter]
+	[EditorRequired]
+	public ParticleCore Core { get; set; } = null!;
+}

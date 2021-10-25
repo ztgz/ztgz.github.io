@@ -1,0 +1,8 @@
+﻿<div class="enemy" style="@(((IPosition)Core).CssPosition())">
+</div>
+
+@code {
+	[Parameter]
+	[EditorRequired]
+	public EnemyCore Core { get; set; } = null!;
+}

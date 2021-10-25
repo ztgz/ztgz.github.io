@@ -1,5 +1,5 @@
-﻿.ship {
-    background-color: red;
+﻿.enemy {
+    background-color: yellow;
     position: absolute;
     border-radius: 50%;
 }

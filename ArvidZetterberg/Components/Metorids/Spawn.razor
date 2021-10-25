@@ -1,0 +1,10 @@
+﻿@foreach(var particle in Core.Particles.Where(p => p is IPosition))
+{
+	<Particle Core="particle" />
+}
+@code {
+
+	[Parameter]
+	[EditorRequired]
+	public SpawnCore Core { get; set; } = null!;
+}

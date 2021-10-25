@@ -1,7 +1,8 @@
-﻿<div class="ship" style="top: @(Core.Y)px; left: @(Core.X)px;">
+﻿<div class="ship" style="@(((IPosition)Core).CssPosition())">
 </div>
 
 @code {
 	[Parameter]
+	[EditorRequired]
 	public ShipCore Core { get; set; } = null!;
 }

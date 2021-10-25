@@ -1,6 +1,42 @@
 ﻿.background {
     width: 100%;
     height: 100%;
-    background: black;
+    background: darkblue;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.camera {
+    background-color: black;
+    width: 790px;
+    height: 590px;
+    position: relative;
+    overflow: hidden;
+}
+
+.paused {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.paused-content {
+    background-color: white;
+    color: darkmagenta;
+    text-align: center;
+}
+
+.input-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 10000;
 }
