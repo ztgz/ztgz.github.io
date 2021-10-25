@@ -28,9 +28,9 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 
         public ICollision.Shape Form => ICollision.Shape.Circle;
 
-
+        public int Damage => 1;
         bool isDestroyed = false;
-        public void HandleCollision() => isDestroyed = true;
+        public void HandleCollision(int damage) => isDestroyed = true;
         public bool ShallBeRemoved() => isDestroyed;
         public IEnumerable<object> ShallBeCreatedOnRemove() => new List<object>(0);
 

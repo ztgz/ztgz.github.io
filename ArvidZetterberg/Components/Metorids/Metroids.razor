@@ -14,23 +14,33 @@
 				<Spawn Core="@((SpawnCore)core)" />
 			}
 		}
-		@if (paused)
+		@if (paused || gameOver)
 		{
 			<div class="paused">
 				<div class="paused-content">
-					<h2>Game paused</h2>
-					<h3>Click on screen to start</h3>
-					<h3>Move the red dot with arrow keys, avoid obstacles</h3>
+					@if (gameOver)
+					{
+						<h2>Game over</h2>
+						<h3>Final score: </h3>
+						<h3>Click on screen to start</h3>
+					}
+					else
+					{
+						<h2>Game paused</h2>
+						<h3>Click on screen to start</h3>
+						<h3>Move the red dot with arrow keys, avoid obstacles</h3>
+					}
 				</div>
 			</div>
 		}
+		<Hud Core="shipCore" />
 		<Ship Core="shipCore" />
 	</div>
 	<input class="input-box" type="text" 
 		@onkeydown="KeyPressed" 
 		@onkeyup="KeyUp" 
 		@onblur="HandleBlur"
-		@onclick="() => paused = false"/>
+		@onclick="HandleClick"/>
 </div>
 
 @code {
@@ -40,6 +50,7 @@
 		new SpawnCore(100, 100)
 	};
 	bool paused = true;
+	bool gameOver = false;
 
 	protected override Task OnInitializedAsync()
 	{
@@ -66,7 +77,11 @@
 				((IUpdate)core).Update(elapsedMilliseconds);
 
 			if (core is (IPosition and ICollision) && ICollision.IsCollision(core, shipCore))
-				((ICollision)core).HandleCollision();
+			{
+				var collision = core as ICollision;
+				collision.HandleCollision(shipCore.Damage);
+				shipCore.HandleCollision(collision.Damage);
+			}
 
 			var removable = core as IRemovable;
 			if (removable is not null && removable.ShallBeRemoved())
@@ -74,6 +89,12 @@
 				items.AddRange(removable.ShallBeCreatedOnRemove());
 				items.RemoveAt(i);
 			}
+		}
+
+		if (!gameOver && shipCore.CurrentLife == 0)
+		{
+			paused = true;
+			gameOver = true;
 		}
 
 		InvokeAsync(StateHasChanged);
@@ -117,6 +138,19 @@
 		upPressed = false;
 		rightPressed = false;
 		leftPressed = false;
+	}
+
+	void HandleClick()
+	{
+		if (gameOver)
+		{
+			items.Clear();
+			items.Add(new SpawnCore(100, 100));
+			shipCore = new();
+			gameOver = false;
+		}
+		
+		paused = false;
 	}
 
 	void SetShipDirections()

@@ -2,6 +2,7 @@
 {
     public interface ICollision
     {
+        public int Damage { get; }
         Shape Form { get; }
         public enum Shape
         {
@@ -9,7 +10,7 @@
             Circle
         }
 
-        public void HandleCollision();
+        public void HandleCollision(int damage);
 
         public static bool IsCollision<U>(object obj1, U obj2)
             where U : IPosition, ICollision

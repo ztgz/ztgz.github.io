@@ -1,0 +1,20 @@
+﻿<div class="hud">
+	<div class="total-life">
+		<div class="life" style="@GetStyle()">
+
+		</div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public ShipCore Core { get; set; } = null!;
+
+	public string GetStyle()
+	{
+		return $"width: {Core.CurrentLife / (Core.MaxLife * 1.0d) * 100}%;"
+			+ (Core.MaxLife == Core.CurrentLife 
+				? "border-radius: 10px;"
+				: "");
+	}
+}
