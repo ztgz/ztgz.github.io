@@ -13,6 +13,10 @@
 			{	
 				<Spawn Core="@((SpawnCore)core)" />
 			}
+			else if (core is ItemCore)
+			{
+				<Item Core="@((ItemCore)core)" />
+			}
 		}
 		@if (paused || gameOver)
 		{
@@ -21,19 +25,19 @@
 					@if (gameOver)
 					{
 						<h2>Game over</h2>
-						<h3>Final score: </h3>
+						<h3>Final score: @score points</h3>
 						<h3>Click on screen to start</h3>
 					}
 					else
 					{
 						<h2>Game paused</h2>
 						<h3>Click on screen to start</h3>
-						<h3>Move the red dot with arrow keys, avoid obstacles</h3>
+						<h3>Move the red dot with arrow keys, avoid obstacles and save the astronauts</h3>
 					}
 				</div>
 			</div>
 		}
-		<Hud Core="shipCore" />
+		<Hud Core="shipCore" Score="score" />
 		<Ship Core="shipCore" />
 	</div>
 	<input class="input-box" type="text" 
@@ -47,10 +51,11 @@
 	GameLoop gameLoop = null!;
 	ShipCore shipCore = new();
 	List<object> items = new List<object>() {
-		new SpawnCore(100, 100)
+		new SpawnCore(100, 100),
 	};
 	bool paused = true;
 	bool gameOver = false;
+	int score = 0;
 
 	protected override Task OnInitializedAsync()
 	{
@@ -81,6 +86,7 @@
 				var collision = core as ICollision;
 				collision.HandleCollision(shipCore.Damage);
 				shipCore.HandleCollision(collision.Damage);
+				score += collision.Value;
 			}
 
 			var removable = core as IRemovable;
@@ -148,6 +154,7 @@
 			items.Add(new SpawnCore(100, 100));
 			shipCore = new();
 			gameOver = false;
+			score = 0;
 		}
 		
 		paused = false;

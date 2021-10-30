@@ -4,6 +4,7 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 {
     public class SpawnCore : IUpdate, IRemovable
     {
+        static Random Random = new Random();
         public int X { get; private set; }
         public int Y { get; private set; }
 
@@ -40,8 +41,16 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 
         public IEnumerable<object> ShallBeCreatedOnRemove()
         {
+            object obj = Random.Next(0, 10) switch
+            {
+                < 6 => new EnemyCore(X, Y),
+                < 9 => new ItemCore(X,Y),
+                _ => new SpawnCore(IPosition.GetRandomX(), IPosition.GetRandomY())
+
+            };
+
             return new List<object>() { 
-                new EnemyCore(X, Y),
+                obj,
                 new SpawnCore(IPosition.GetRandomX(), IPosition.GetRandomY())
             };
         }

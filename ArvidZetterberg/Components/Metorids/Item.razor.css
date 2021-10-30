@@ -1,0 +1,68 @@
+﻿.item {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.head {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 10px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+.body {
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    top: 7px;
+    left: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.right-arm {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 8px;
+    left: 17px;
+    transform: rotate(151deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.right-leg {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 20px;
+    left: 14px;
+    transform: rotate(41deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.left-arm {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 8px;
+    left: 1px;
+    transform: rotate(20deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.left-leg {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 20px;
+    left: 5px;
+    transform: rotate(134deg);
+    background-color: white;
+    border-radius: 10px;
+}

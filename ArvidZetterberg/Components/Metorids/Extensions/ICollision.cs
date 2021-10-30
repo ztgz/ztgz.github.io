@@ -2,6 +2,7 @@
 {
     public interface ICollision
     {
+        public int Value { get; }
         public int Damage { get; }
         Shape Form { get; }
         public enum Shape

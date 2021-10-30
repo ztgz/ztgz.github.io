@@ -24,3 +24,11 @@
     border-top-left-radius: 10px;
     background-color: darkgreen;
 }
+
+.score {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+}

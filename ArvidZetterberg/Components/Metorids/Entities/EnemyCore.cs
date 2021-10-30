@@ -5,8 +5,6 @@ namespace ArvidZetterberg.Components.Metorids.Entities
     public partial class EnemyCore : ICollision, IUpdate, IRemovable
     {
         public static Random Random = new Random(DateTime.Now.Millisecond * DateTime.Now.Millisecond);
-
-        static Random rand = new Random();
         public EnemyCore(double? startX = null, double? startY = null)
         {
             y = startY ?? IPosition.GetRandomY();
@@ -18,6 +16,9 @@ namespace ArvidZetterberg.Components.Metorids.Entities
         public ICollision.Shape Form => ICollision.Shape.Circle;
 
         public int Damage => 1;
+
+        public int Value => 0;
+
         bool isDestroyed = false;
         public void HandleCollision(int damage) => isDestroyed = true;
         public bool ShallBeRemoved() => isDestroyed;

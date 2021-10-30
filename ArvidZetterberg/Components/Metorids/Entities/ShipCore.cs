@@ -17,6 +17,8 @@ namespace ArvidZetterberg.Components.Metorids.Entities
             }
         }
 
+        public int Value => 0;
+
         public void HandleCollision(int damage)
         {
             life -= damage;

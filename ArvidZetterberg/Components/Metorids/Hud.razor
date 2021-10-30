@@ -5,10 +5,14 @@
 		</div>
 	</div>
 </div>
+<p class="score">@Score points</p>
 
 @code {
 	[Parameter]
 	public ShipCore Core { get; set; } = null!;
+
+	[Parameter]
+	public int Score { get; set; }
 
 	public string GetStyle()
 	{
