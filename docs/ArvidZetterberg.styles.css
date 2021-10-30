@@ -59,6 +59,171 @@ h4[b-8e03easax1] {
     border-radius: 6px;
     cursor: pointer;
 }
+/* /Components/Metorids/Enemy.razor.rz.scp.css */
+.enemy[b-abp85s01on] {
+    background-color: yellow;
+    position: absolute;
+    border-radius: 50%;
+}
+/* /Components/Metorids/Hud.razor.rz.scp.css */
+.hud[b-ccaosds3kx] {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    color: red;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border: 2px solid goldenrod;
+    background-color: goldenrod;
+    z-index: 10;
+}
+
+.total-life[b-ccaosds3kx] {
+    height: 100%;
+    width: 100%;
+    background-color: darkred;
+    border-radius: 10px;
+}
+
+.life[b-ccaosds3kx] {
+    height: 100%;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: darkgreen;
+}
+
+.score[b-ccaosds3kx] {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+}
+/* /Components/Metorids/Item.razor.rz.scp.css */
+.item[b-24yahum6fe] {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.head[b-24yahum6fe] {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 10px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+.body[b-24yahum6fe] {
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    top: 7px;
+    left: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.right-arm[b-24yahum6fe] {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 8px;
+    left: 17px;
+    transform: rotate(151deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.right-leg[b-24yahum6fe] {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 20px;
+    left: 14px;
+    transform: rotate(41deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.left-arm[b-24yahum6fe] {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 8px;
+    left: 1px;
+    transform: rotate(20deg);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.left-leg[b-24yahum6fe] {
+    position: absolute;
+    width: 12px;
+    height: 4px;
+    top: 20px;
+    left: 5px;
+    transform: rotate(134deg);
+    background-color: white;
+    border-radius: 10px;
+}
+/* /Components/Metorids/Metroids.razor.rz.scp.css */
+.background[b-07nsi962x8] {
+    width: 100%;
+    height: 100%;
+    background: darkblue;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.camera[b-07nsi962x8] {
+    background-color: black;
+    width: 790px;
+    height: 590px;
+    position: relative;
+    overflow: hidden;
+}
+
+.paused[b-07nsi962x8] {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.paused-content[b-07nsi962x8] {
+    background-color: white;
+    color: darkmagenta;
+    text-align: center;
+}
+
+.input-box[b-07nsi962x8] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 10000;
+}
+/* /Components/Metorids/Particle.razor.rz.scp.css */
+.cloud[b-2rgqzu6mpi] {
+    background-color: lightsalmon;
+    border-radius: 50%;
+    opacity: 40%;
+}
+/* /Components/Metorids/Ship.razor.rz.scp.css */
+.ship[b-m8wfdporyn] {
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+}
 /* /Components/Windows/IconLink.razor.rz.scp.css */
 .icon-link[b-d5cq4f9gw4] {
     width: 50px;
