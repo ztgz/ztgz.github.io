@@ -1,5 +1,4 @@
 ﻿using ArvidZetterberg.Components.Metorids.Extensions;
-using static ArvidZetterberg.Components.Metorids.Extensions.IPosition;
 
 namespace ArvidZetterberg.Components.Metorids.Entities
 {
@@ -10,8 +9,6 @@ namespace ArvidZetterberg.Components.Metorids.Entities
         {
             this.x = x;
             this.y = y;
-            //xDirection = XDirection.Left;
-            //yDirection = YDirection.Up;
 
             ySpeed = RandomSpeed();
             xSpeed = RandomSpeed();
@@ -48,17 +45,6 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 
         double ySpeed;
         double IPosition.YSpeed { get => ySpeed; set => ySpeed = value; }
-
-        XDirection xDirection;
-        XDirection IPosition.XDir { get => xDirection; set => xDirection = value; }
-
-        YDirection yDirection;
-        YDirection IPosition.YDir { get => yDirection; set => yDirection = value; }
-
-        double IPosition.SpeedIncrease => 0;
-
-        double IPosition.MaxSpeed => 1000;
-
         public static int GetRandomLifeTime() => Random.Next(2000, 4000);
     }
 }

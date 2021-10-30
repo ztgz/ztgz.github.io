@@ -11,24 +11,8 @@
 		public int Height { get; }
 		public double XSpeed { get; protected set; }
 		public double YSpeed { get; protected set; }
-		public XDirection XDir { get; protected set; }
-		public YDirection YDir { get; protected set; }
-		public double SpeedIncrease { get; }
-		public double MaxSpeed { get; }
 
-		public enum XDirection
-		{
-			None,
-			Left,
-			Right
-		}
-
-		public enum YDirection
-		{
-			None,
-			Up,
-			Down
-		}
+		public string CssPosition() => $"top: {Y}px; left: {X}px; width: {Width}px; height: {Height}px;";
 
 		void Move(double milliseconds)
         {
@@ -36,27 +20,8 @@
 			UpdateYSpeed(milliseconds);
         }
 
-		public string CssPosition() => $"top: {Y}px; left: {X}px; width: {Width}px; height: {Height}px;";
-
 		private void UpdateYSpeed(double milliseconds)
 		{
-			if (YDir == YDirection.Down)
-			{
-				YSpeed += SpeedIncrease * milliseconds;
-				if (YSpeed > MaxSpeed)
-					YSpeed = MaxSpeed;
-			}
-			else if (YDir == YDirection.Up)
-			{
-				YSpeed -= SpeedIncrease * milliseconds;
-				if (YSpeed < -MaxSpeed)
-					YSpeed = -MaxSpeed;
-			}
-			else
-			{
-				YSpeed = GetAdjustedSpeed(YSpeed, milliseconds);
-			}
-
 			Y += YSpeed * milliseconds;
 			if (Y + (Height / 2) < 0)
 				Y = ScreenHeight - (Height /2);
@@ -66,39 +31,11 @@
 
 		private void UpdateXSpeed(double milliseconds)
 		{
-			if (XDir == XDirection.Right)
-			{
-				XSpeed += SpeedIncrease * milliseconds;
-				if (XSpeed > MaxSpeed)
-					XSpeed = MaxSpeed;
-			}
-			else if (XDir == XDirection.Left)
-			{
-				XSpeed -= SpeedIncrease * milliseconds;
-				if (XSpeed < -MaxSpeed)
-					XSpeed = -MaxSpeed;
-			}
-			else
-			{
-				XSpeed = GetAdjustedSpeed(XSpeed, milliseconds);
-			}
-
 			X += XSpeed * milliseconds;
 			if (X + (Width / 2) < 0)
 				X = ScreenWidth - (Width / 2);
 			else if (X	 + (Width / 2) > ScreenWidth)
 				X = -(Width / 2);
-
-		}
-
-		private double GetAdjustedSpeed(double speed, double milliseconds)
-		{
-			if (speed > SpeedIncrease * milliseconds)
-				return speed - SpeedIncrease;
-			else if (speed < -SpeedIncrease * milliseconds)
-				return speed + SpeedIncrease * milliseconds;
-
-			return 0;
 		}
 
 		static Random rand = new Random();

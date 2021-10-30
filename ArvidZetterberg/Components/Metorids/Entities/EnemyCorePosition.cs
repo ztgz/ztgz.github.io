@@ -17,20 +17,7 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 		double ySpeed = 1;
 		double IPosition.YSpeed { get => ySpeed; set => ySpeed = value; }
 
-		XDirection xDirection = XDirection.None;
-		XDirection IPosition.XDir { get => xDirection; set => xDirection = value; }
-
-		YDirection yDirection = YDirection.Down;
-		YDirection IPosition.YDir { get => yDirection; set => yDirection = value; }
-
-		public double SpeedIncrease => 02;
-		private double maxSpeed = 0.03;
-		public double MaxSpeed => maxSpeed;
         public int Width => 20;
         public int Height => 20;
-
-        public void SetXDirection(XDirection xDirection) => this.xDirection = xDirection;
-
-		public void SetYDirection(YDirection yDirection) => this.yDirection = yDirection;
 	}
 }

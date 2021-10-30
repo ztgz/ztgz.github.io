@@ -157,16 +157,16 @@
 	{
 		shipCore.SetYDirection((downPressed, upPressed) switch
 		{
-			(true, false) => IPosition.YDirection.Down,
-			(false, true) => IPosition.YDirection.Up,
-			_ => IPosition.YDirection.None
+			(true, false) => ShipCore.YDirection.Down,
+			(false, true) => ShipCore.YDirection.Up,
+			_ => ShipCore.YDirection.None
 		});
 
 		shipCore.SetXDirection((leftPressed, rightPressed) switch
 		{
-			(true, false) => IPosition.XDirection.Left,
-			(false, true) => IPosition.XDirection.Right,
-			_ => IPosition.XDirection.None
+			(true, false) => ShipCore.XDirection.Left,
+			(false, true) => ShipCore.XDirection.Right,
+			_ => ShipCore.XDirection.None
 		});
 	}
 

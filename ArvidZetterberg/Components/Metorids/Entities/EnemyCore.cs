@@ -4,26 +4,15 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 {
     public partial class EnemyCore : ICollision, IUpdate, IRemovable
     {
+        public static Random Random = new Random(DateTime.Now.Millisecond * DateTime.Now.Millisecond);
+
         static Random rand = new Random();
         public EnemyCore(double? startX = null, double? startY = null)
         {
             y = startY ?? IPosition.GetRandomY();
             x = startX ?? IPosition.GetRandomX();
-            maxSpeed = rand.NextDouble() / 20 + .1;
-            
-            xDirection = rand.Next(0, 2) switch
-            {
-                0 => IPosition.XDirection.Left,
-                1 => IPosition.XDirection.Right,
-                _ => IPosition.XDirection.None
-            };
-
-            yDirection = rand.Next(0, 2) switch
-            {
-                0 => IPosition.YDirection.Up,
-                1 => IPosition.YDirection.Down,
-                _ => IPosition.YDirection.None
-            };
+            ySpeed = RandomSpeed();
+            xSpeed = RandomSpeed();
         }
 
         public ICollision.Shape Form => ICollision.Shape.Circle;
@@ -34,10 +23,13 @@ namespace ArvidZetterberg.Components.Metorids.Entities
         public bool ShallBeRemoved() => isDestroyed;
         public IEnumerable<object> ShallBeCreatedOnRemove() => new List<object>(0);
 
-
         public void Update(double milliseconds)
         {
             ((IPosition)this).Move(milliseconds);
         }
+
+        private double RandomSpeed() => (Random.Next(100, 300) * 0.0005 + .00001) // The speed
+            * (Random.Next(0, 2) == 0 ? -1 : 1); // Randomize positive and negative numbers;
+
     }
 }

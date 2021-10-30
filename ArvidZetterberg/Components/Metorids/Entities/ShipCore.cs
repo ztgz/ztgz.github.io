@@ -26,6 +26,8 @@ namespace ArvidZetterberg.Components.Metorids.Entities
 
         public void Update(double milliseconds)
 		{
+            UpdateXSpeed(milliseconds);
+            UpdateYSpeed(milliseconds);
 			((IPosition)this).Move(milliseconds);
 		}
 	}
