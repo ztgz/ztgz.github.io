@@ -4,9 +4,11 @@
 		<div class="row">
 			@for (int x = 0; x < sizeX; x++)
 			{
+				int currentX = x;
+				int currentY = y;
 				<Tile Related="tiles[y,x]" 
 					Visible="visible[y,x]"
-					OnClick="OpenTile" />
+					OnClick="() => { OpenTile(currentY, currentX); }" />
 			}
 		</div>
 	}
@@ -15,19 +17,25 @@
 @code {
 	private int sizeX = 10;
 	private int sizeY = 10;
-	private int[,] tiles;
-	private bool[,] visible;
+	private int[,] tiles = null!;
+	private bool[,] visible = null!;
 
 	private int avaialbeTrash = 10;
 
 	const int TRASH = -1;
+	Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
 
-	protected override void OnInitialized()
+	protected override void OnInitialized() => SetupBoard();
+
+	void SetupBoard()
 	{
-		tiles = new int[sizeY, sizeX];
-		visible = new bool[sizeY, sizeX];
+		ResetGrids();
+		RandomizeBoard();
+		SetBoardValues();
+	}
 
-		Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
+	void RandomizeBoard()
+	{
 		int placed = 0;
 		do
 		{
@@ -39,8 +47,16 @@
 				placed++;
 			}
 		} while (placed < avaialbeTrash);
+	}
 
+	void ResetGrids()
+	{
+		tiles = new int[sizeY, sizeX];
+		visible = new bool[sizeY, sizeX];
+	}
 
+	void SetBoardValues()
+	{
 		for (int y = 0; y < sizeY; y++)
 			for (int x = 0; x < sizeX; x++)
 				if (tiles[y ,x] != TRASH)
@@ -57,14 +73,31 @@
 
 		return count;
 
-		bool isValidTile(int cY, int cX) => isInsideBoardX(cX) && isInsideBoardY(cY) && isNotTarget(cY, cX);
-		bool isInsideBoardY(int cY) => cY >= 0 && cY < sizeY;
-		bool isInsideBoardX(int cX) => cX >= 0 && cX < sizeX;
+		bool isValidTile(int cY, int cX) => IsInsideBoardX(cX) && IsInsideBoardY(cY) && isNotTarget(cY, cX);
 		bool isNotTarget(int cY, int cX) => cY != y || cX != x;
 	}
 
 	void OpenTile(int y, int x)
 	{
 		visible[y, x] = true;
+		if (tiles[y, x] == 0)
+			OpenRelatedTiles(y, x);
+	}
+
+	bool IsInsideBoardY(int cY) => cY >= 0 && cY < sizeY;
+	bool IsInsideBoardX(int cX) => cX >= 0 && cX < sizeX;
+
+	void OpenRelatedTiles(int y, int x)
+	{
+		for (int sY = y - 1; sY <= y + 1; sY++)
+			for (int sX = x - 1; sX <= x + 1; sX++)
+				if (IsInsideBoardX(sX) && IsInsideBoardY(sY) && !visible[sY, sX])
+				{
+					var value = tiles[sY, sX];
+					if (value != TRASH)
+						visible[sY, sX] = true;
+					if (value == 0)
+						OpenRelatedTiles(sY, sX);
+				}
 	}
 }

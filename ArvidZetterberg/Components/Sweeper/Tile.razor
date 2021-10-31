@@ -1,5 +1,5 @@
-﻿<div class="tile" @onclick="HandleClick">
-	@if (Visible)
+﻿<div class="tile @(Visible ? "visible" : "")" @onclick="HandleClick">
+	@if (Visible && Related != 0)
 	{
 		@Related
 	}

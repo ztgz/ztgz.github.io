@@ -13,3 +13,7 @@
     .tile:hover {
         background-color: #6c6969
     }
+
+.visible {
+    background-color: darkgray;
+}
