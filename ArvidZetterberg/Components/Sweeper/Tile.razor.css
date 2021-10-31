@@ -1,0 +1,15 @@
+﻿.tile {
+    background-color: lightgray;
+    border: 1px solid gray;
+    flex-grow: 1;
+    border-radius: 2px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .tile:hover {
+        background-color: #6c6969
+    }

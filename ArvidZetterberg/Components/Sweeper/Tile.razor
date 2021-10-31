@@ -1,0 +1,22 @@
+﻿<div class="tile" @onclick="HandleClick">
+	@if (Visible)
+	{
+		@Related
+	}
+</div>
+@code {
+	[Parameter]
+	public int Related { get; set; }
+
+	[Parameter]
+	public bool Visible { get; set; }
+
+	[Parameter]
+	public EventCallback OnClick { get; set; }
+
+	void HandleClick()
+	{
+		if (Visible == false)
+			OnClick.InvokeAsync();
+	}
+}

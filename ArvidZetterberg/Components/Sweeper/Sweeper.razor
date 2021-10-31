@@ -1,0 +1,70 @@
+﻿<div class="board">
+	@for (int y = 0; y < sizeY; y++)
+	{
+		<div class="row">
+			@for (int x = 0; x < sizeX; x++)
+			{
+				<Tile Related="tiles[y,x]" 
+					Visible="visible[y,x]"
+					OnClick="OpenTile" />
+			}
+		</div>
+	}
+</div>
+
+@code {
+	private int sizeX = 10;
+	private int sizeY = 10;
+	private int[,] tiles;
+	private bool[,] visible;
+
+	private int avaialbeTrash = 10;
+
+	const int TRASH = -1;
+
+	protected override void OnInitialized()
+	{
+		tiles = new int[sizeY, sizeX];
+		visible = new bool[sizeY, sizeX];
+
+		Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
+		int placed = 0;
+		do
+		{
+			int x = random.Next(0, sizeX);
+			int y = random.Next(0, sizeY);
+			if (tiles[y,x] == 0)
+			{
+				tiles[y, x] = TRASH;
+				placed++;
+			}
+		} while (placed < avaialbeTrash);
+
+
+		for (int y = 0; y < sizeY; y++)
+			for (int x = 0; x < sizeX; x++)
+				if (tiles[y ,x] != TRASH)
+					tiles[y, x] = GetNearbyTrash(y, x);
+	}
+
+	int GetNearbyTrash(int y, int x)
+	{
+		int count = 0;
+		for (int sY = y - 1; sY <= y + 1; sY++)
+			for (int sX = x - 1; sX <= x + 1; sX++)
+				if (isValidTile(sY, sX) && tiles[sY, sX] == TRASH)
+					count++;
+
+		return count;
+
+		bool isValidTile(int cY, int cX) => isInsideBoardX(cX) && isInsideBoardY(cY) && isNotTarget(cY, cX);
+		bool isInsideBoardY(int cY) => cY >= 0 && cY < sizeY;
+		bool isInsideBoardX(int cX) => cX >= 0 && cX < sizeX;
+		bool isNotTarget(int cY, int cX) => cY != y || cX != x;
+	}
+
+	void OpenTile(int y, int x)
+	{
+		visible[y, x] = true;
+	}
+}
