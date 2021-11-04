@@ -1,0 +1,12 @@
+﻿<div class="menu">
+	<p>1</p>
+	<div class="start-btn" @onclick="OnNewClick">
+		<div class="smiley"></div>
+	</div>
+	<p>1</p>
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback OnNewClick { get; set; }
+}

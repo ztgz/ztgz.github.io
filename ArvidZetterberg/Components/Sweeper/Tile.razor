@@ -1,9 +1,24 @@
-﻿<div class="tile @(Visible ? "visible" : "")" @onclick="HandleClick">
-	@if (Visible && Related != 0)
+﻿<div class="tile @(Visible ? "visible" : "")" 
+	@onclick="HandleClick" 
+	@oncontextmenu="HandleRightClick"
+	@oncontextmenu:preventDefault="true">
+	@if (Visible)
 	{
-		@Related
+		if (Related != 0)
+		{
+			@Related
+		}
+	}
+	else if (state == State.Blocked)
+	{
+		<span>X</span>
+	}
+	else if (state == State.Question)
+	{
+		<span>?</span>
 	}
 </div>
+
 @code {
 	[Parameter]
 	public int Related { get; set; }
@@ -14,9 +29,34 @@
 	[Parameter]
 	public EventCallback OnClick { get; set; }
 
+	[Parameter]
+	public bool Disabled { get; set; }
+
+	State state = State.Default;
+
+	enum State
+	{
+		Default,
+		Blocked,
+		Question
+	}
+
 	void HandleClick()
 	{
-		if (Visible == false)
+		if (Visible == false && !Disabled && state != State.Blocked)
 			OnClick.InvokeAsync();
+	}
+
+	void HandleRightClick()
+	{
+		if (Visible == false && !Disabled)
+		{
+			state = state switch
+			{
+				State.Default => State.Blocked,
+				State.Blocked => State.Question,
+				_ => State.Default
+			};
+		}
 	}
 }

@@ -1,0 +1,30 @@
+﻿.menu {
+    background-color: gray;
+    height: 60px;
+    width: 100%;
+    border: 1px solid black;
+    padding: 5px 10px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.start-btn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: lightgray;
+    padding: 10px;
+}
+
+.start-btn:hover {
+    background-color: dimgrey;
+}
+
+.smiley {
+    width: 100%;
+    background-color: yellow;
+    border-radius: 50%;
+    height: 100%;
+}

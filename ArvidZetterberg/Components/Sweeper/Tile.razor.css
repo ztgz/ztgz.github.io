@@ -3,6 +3,7 @@
     border: 1px solid gray;
     flex-grow: 1;
     border-radius: 2px;
+    flex-basis: 10px;
     height: 100%;
 
     display: flex;

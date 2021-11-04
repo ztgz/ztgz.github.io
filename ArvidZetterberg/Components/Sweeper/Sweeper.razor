@@ -1,4 +1,5 @@
 ﻿<div class="board">
+	<SweeperMenu OnNewClick="SetupBoard" />
 	@for (int y = 0; y < sizeY; y++)
 	{
 		<div class="row">
@@ -8,7 +9,9 @@
 				int currentY = y;
 				<Tile Related="tiles[y,x]" 
 					Visible="visible[y,x]"
-					OnClick="() => { OpenTile(currentY, currentX); }" />
+					Disabled="gameOver"
+					OnClick="() => { OpenTile(currentY, currentX); }"
+					/>
 			}
 		</div>
 	}
@@ -21,7 +24,7 @@
 	private bool[,] visible = null!;
 
 	private int avaialbeTrash = 10;
-
+	private bool gameOver = false;
 	const int TRASH = -1;
 	Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
 
@@ -82,6 +85,8 @@
 		visible[y, x] = true;
 		if (tiles[y, x] == 0)
 			OpenRelatedTiles(y, x);
+		else if (tiles[y, x] == TRASH)
+			gameOver = true;
 	}
 
 	bool IsInsideBoardY(int cY) => cY >= 0 && cY < sizeY;
