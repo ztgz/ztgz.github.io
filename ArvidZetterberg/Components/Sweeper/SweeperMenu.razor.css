@@ -27,4 +27,41 @@
     background-color: yellow;
     border-radius: 50%;
     height: 100%;
+    position: relative;
+}
+
+.eye {
+    width: 5px;
+    height: 5px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.left-eye {
+    top: 5px;
+    left: 5px;
+}
+
+.right-eye {
+    top: 5px;
+    right: 5px;
+}
+
+.mouth {
+    position: absolute;
+    width: 80%;
+    height: 15px;
+    border-radius: 40%;
+    bottom: 7px;
+    left: 3px;
+}
+
+.glad-mouth {
+    border-bottom: 2px solid black;
+}
+
+.sad-mouth {
+    border-top: 2px solid black;
+    top: 15px;
 }

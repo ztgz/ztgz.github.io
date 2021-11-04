@@ -1,7 +1,11 @@
 ﻿<div class="menu">
 	<p>1</p>
 	<div class="start-btn" @onclick="OnNewClick">
-		<div class="smiley"></div>
+		<div class="smiley">
+			<div class="eye left-eye"></div>
+			<div class="eye right-eye"></div>
+			<div class="mouth @(IsGameOver ? "sad-mouth" : "glad-mouth")"></div>
+		</div>
 	</div>
 	<p>1</p>
 </div>
@@ -9,4 +13,7 @@
 @code {
 	[Parameter]
 	public EventCallback OnNewClick { get; set; }
+
+	[Parameter]
+	public bool IsGameOver { get; set; }
 }

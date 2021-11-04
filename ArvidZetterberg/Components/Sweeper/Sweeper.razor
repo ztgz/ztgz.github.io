@@ -1,5 +1,5 @@
-﻿<div class="board">
-	<SweeperMenu OnNewClick="SetupBoard" />
+﻿<div class="board" @key=@($"itteration-{iteration}")>
+	<SweeperMenu OnNewClick="SetupGame" IsGameOver="gameOver" />
 	@for (int y = 0; y < sizeY; y++)
 	{
 		<div class="row">
@@ -25,13 +25,16 @@
 
 	private int avaialbeTrash = 10;
 	private bool gameOver = false;
+	int iteration = 0;
 	const int TRASH = -1;
 	Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
 
-	protected override void OnInitialized() => SetupBoard();
+	protected override void OnInitialized() => SetupGame();
 
-	void SetupBoard()
+	void SetupGame()
 	{
+		iteration++;
+		gameOver = false;
 		ResetGrids();
 		RandomizeBoard();
 		SetBoardValues();
