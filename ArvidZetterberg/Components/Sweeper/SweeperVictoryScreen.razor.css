@@ -1,0 +1,19 @@
+﻿.victory-screen {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-text {
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid gray;
+    padding: 4px 20px;
+    -webkit-box-shadow: 6px 2px 15px 4px #454547;
+    box-shadow: 6px 2px 15px 4px #454547;
+}

@@ -1,5 +1,9 @@
 ﻿<div class="board" @key=@($"itteration-{iteration}")>
-	<SweeperMenu OnNewClick="SetupGame" IsGameOver="gameOver" />
+	@if (gameState == GameState.Victory)
+	{
+		<SweeperVictoryScreen />
+	}
+	<SweeperMenu OnNewClick="SetupGame" IsGameOver="gameState == GameState.GameOver" />
 	@for (int y = 0; y < sizeY; y++)
 	{
 		<div class="row">
@@ -9,7 +13,7 @@
 				int currentY = y;
 				<Tile Related="tiles[y,x]" 
 					Visible="visible[y,x]"
-					Disabled="gameOver"
+					Disabled="gameState != GameState.Playing"
 					OnClick="() => { OpenTile(currentY, currentX); }"
 					/>
 			}
@@ -24,7 +28,7 @@
 	private bool[,] visible = null!;
 
 	private int avaialbeTrash = 10;
-	private bool gameOver = false;
+	private GameState gameState;
 	int iteration = 0;
 	const int TRASH = -1;
 	Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
@@ -34,7 +38,7 @@
 	void SetupGame()
 	{
 		iteration++;
-		gameOver = false;
+		gameState = GameState.Playing;
 		ResetGrids();
 		RandomizeBoard();
 		SetBoardValues();
@@ -63,10 +67,11 @@
 
 	void SetBoardValues()
 	{
-		for (int y = 0; y < sizeY; y++)
-			for (int x = 0; x < sizeX; x++)
-				if (tiles[y ,x] != TRASH)
-					tiles[y, x] = GetNearbyTrash(y, x);
+		LoopTroughBoard((int y, int x) =>
+		{
+			if (tiles[y ,x] != TRASH)
+				tiles[y, x] = GetNearbyTrash(y, x);
+		});
 	}
 
 	int GetNearbyTrash(int y, int x)
@@ -86,10 +91,18 @@
 	void OpenTile(int y, int x)
 	{
 		visible[y, x] = true;
-		if (tiles[y, x] == 0)
-			OpenRelatedTiles(y, x);
-		else if (tiles[y, x] == TRASH)
-			gameOver = true;
+		if (tiles[y, x] == TRASH)
+		{
+			gameState = GameState.GameOver;
+		}
+		else
+		{
+			if (tiles[y, x] == 0)
+			{
+				OpenRelatedTiles(y, x);
+			}
+			CheckForVictory();
+		}
 	}
 
 	bool IsInsideBoardY(int cY) => cY >= 0 && cY < sizeY;
@@ -107,5 +120,39 @@
 					if (value == 0)
 						OpenRelatedTiles(sY, sX);
 				}
+	}
+
+	void CheckForVictory()
+	{
+		int hiddenTiles = 0;
+		LoopTroughBoard((int y, int x) =>
+		{
+			if (visible[y, x] == false)
+				hiddenTiles++;
+		});
+
+		if (hiddenTiles == avaialbeTrash)
+		{
+			gameState = GameState.Victory;
+			Console.WriteLine("Victory");
+		}
+	}
+
+	/// <summary>
+	/// Loop trough all tiles positions on the board
+	/// </summary>
+	/// <param name="action">First int parameter is the y position, second int prameter is the x position</param>
+	void LoopTroughBoard(Action<int, int> action)
+	{
+		for (int y = 0; y < sizeY; y++)
+			for (int x = 0; x < sizeX; x++)
+				action.Invoke(y, x);
+	}
+
+	enum GameState
+	{
+		Playing,
+		GameOver,
+		Victory
 	}
 }
