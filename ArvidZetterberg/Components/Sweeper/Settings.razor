@@ -1,0 +1,13 @@
+﻿<div class="settings">
+	<h3>Choose difficulty</h3>
+	<button @onclick="() => OnSettingsChanged.InvokeAsync(new(10,10,10))">Easy (10 trash)</button>
+	<button @onclick="() => OnSettingsChanged.InvokeAsync(new(13,15,40))">Medium (40 trash)</button>
+	<button @onclick="() => OnSettingsChanged.InvokeAsync(new(30,16,99))">Hard (99 trash)</button>
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback<SweeperSetting> OnSettingsChanged { get; set; }
+
+	public record SweeperSetting(int sizeY, int sizeX, int trashCount);
+}

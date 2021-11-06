@@ -1,13 +1,21 @@
-﻿<div class="menu">
-	<p>1</p>
-	<div class="start-btn" @onclick="OnNewClick">
-		<div class="smiley">
-			<div class="eye left-eye"></div>
-			<div class="eye right-eye"></div>
-			<div class="mouth @(IsGameOver ? "sad-mouth" : "glad-mouth")"></div>
+﻿@implements IDisposable
+
+<div class="menu">
+	<div class="edge-menu">
+		<i class="fas fa-cog fa-2x" @onclick="() => OnSettingsClicked.InvokeAsync()"></i>
+		<div class="time">
+			@GetElapsedSeconds()
 		</div>
 	</div>
-	<p>1</p>
+	<div class="btn-container">
+		<div class="start-btn" @onclick="OnNewClick">
+			<div class="smiley">
+				<div class="eye left-eye"></div>
+				<div class="eye right-eye"></div>
+				<div class="mouth @(IsGameOver ? "sad-mouth" : "glad-mouth")"></div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @code {
@@ -16,4 +24,25 @@
 
 	[Parameter]
 	public bool IsGameOver { get; set; }
+
+	[Parameter]
+	public bool IsRunning { get; set; }
+
+	[Parameter]
+	public EventCallback OnSettingsClicked { get; set; }
+
+	GameLoop gameLoop = new GameLoop(250);
+	double elapsedMilliseconds = 0;
+
+	protected override void OnInitialized() =>	gameLoop.AddToUpdate(OnUpdate);
+	void OnUpdate(double milliseconds)
+	{	
+		if (milliseconds < 999_000 && IsRunning)
+			elapsedMilliseconds += milliseconds;
+		InvokeAsync(StateHasChanged);
+	}
+
+	int GetElapsedSeconds() => ((int)elapsedMilliseconds) / 1000;
+
+	public void Dispose() => gameLoop.RemoveFromUpdate(OnUpdate);
 }

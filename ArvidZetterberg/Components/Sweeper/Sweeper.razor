@@ -1,23 +1,34 @@
 ﻿<div class="board" @key=@($"itteration-{iteration}")>
-	@if (gameState == GameState.Victory)
+	@if (gameState == GameState.Settings)
 	{
-		<SweeperVictoryScreen />
+		<Settings OnSettingsChanged="HandleSettingsChanged"/>
 	}
-	<SweeperMenu OnNewClick="SetupGame" IsGameOver="gameState == GameState.GameOver" />
-	@for (int y = 0; y < sizeY; y++)
+	else 
 	{
-		<div class="row">
-			@for (int x = 0; x < sizeX; x++)
-			{
-				int currentX = x;
-				int currentY = y;
-				<Tile Related="tiles[y,x]" 
-					Visible="visible[y,x]"
-					Disabled="gameState != GameState.Playing"
-					OnClick="() => { OpenTile(currentY, currentX); }"
-					/>
-			}
-		</div>
+		@if (gameState == GameState.Victory)
+		{
+			<SweeperVictoryScreen />
+		}
+		<SweeperMenu OnNewClick="SetupGame" 
+			IsGameOver="gameState == GameState.GameOver"
+			IsRunning="gameState == GameState.Playing" 
+			OnSettingsClicked="() => gameState = GameState.Settings"/>
+
+		@for (int y = 0; y < sizeY; y++)
+		{
+			<div class="row">
+				@for (int x = 0; x < sizeX; x++)
+				{
+					int currentX = x;
+					int currentY = y;
+					<Tile Related="tiles[y,x]" 
+						Visible="visible[y,x]"
+						Disabled="gameState != GameState.Playing"
+						OnClick="() => { OpenTile(currentY, currentX); }"
+						/>
+				}
+			</div>
+		}
 	}
 </div>
 
@@ -38,10 +49,10 @@
 	void SetupGame()
 	{
 		iteration++;
-		gameState = GameState.Playing;
 		ResetGrids();
 		RandomizeBoard();
 		SetBoardValues();
+		gameState = GameState.Playing;
 	}
 
 	void RandomizeBoard()
@@ -138,6 +149,14 @@
 		}
 	}
 
+	void HandleSettingsChanged(Settings.SweeperSetting newSettings)
+	{
+		sizeY = newSettings.sizeY;
+		sizeX = newSettings.sizeX;
+		avaialbeTrash = newSettings.trashCount;
+		SetupGame();
+	}
+
 	/// <summary>
 	/// Loop trough all tiles positions on the board
 	/// </summary>
@@ -153,6 +172,7 @@
 	{
 		Playing,
 		GameOver,
-		Victory
+		Victory,
+		Settings
 	}
 }
