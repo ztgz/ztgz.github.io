@@ -41,7 +41,7 @@
 	private int avaialbeTrash = 10;
 	private GameState gameState;
 	int iteration = 0;
-	const int TRASH = -1;
+	public const int TRASH = -1;
 	Random random = new Random(DateTime.UtcNow.Millisecond * DateTime.UtcNow.Second);
 
 	protected override void OnInitialized() => SetupGame();

@@ -4,18 +4,22 @@
 	@oncontextmenu:preventDefault="true">
 	@if (Visible)
 	{
-		if (Related != 0)
+		if (Related == Sweeper.TRASH)
+		{
+			<i class="fas fa-skull-crossbones" style="color:darkred;"></i>
+		}
+		else if (Related != 0)
 		{
 			@Related
 		}
 	}
 	else if (state == State.Blocked)
 	{
-		<span>X</span>
+		<i class="fas fa-times-circle" style="color:blue;"></i>
 	}
 	else if (state == State.Question)
 	{
-		<span>?</span>
+		<i class="fas fa-exclamation"></i>
 	}
 </div>
 
