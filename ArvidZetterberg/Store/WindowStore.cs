@@ -24,7 +24,7 @@ namespace ArvidZetterberg.Store
             {
                 Icon = "fa-question-circle",
                 Name = "Help",
-                StartMeasuers = new() { Width = 400, Height = 400 }
+                StartMeasuers = new() { Width = 400, Height = 450 }
             }
         };
 
