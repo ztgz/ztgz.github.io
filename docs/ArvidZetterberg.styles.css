@@ -1,3 +1,34 @@
+/* /Components/Common/AppSettings.razor.rz.scp.css */
+.app-settings[b-2cnznc2b1p] {
+    display: flex;
+    flex-direction: column;
+    padding: .2rem .4rem;
+    gap: .4rem;
+}
+
+.app-settings > div[b-2cnznc2b1p] {
+    padding: 0 .8rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+    .app-settings > div > input[b-2cnznc2b1p] {
+        min-width: 50px;
+    }
+
+.save-button[b-2cnznc2b1p] {
+    min-height: 2rem;
+    padding-top: .4rem;
+}
+
+.cookie-text[b-2cnznc2b1p] {
+    margin-bottom: .2rem;
+}
+
+.cookie-consent[b-2cnznc2b1p] {
+    display: flex;
+}
 /* /Components/Common/Clock.razor.rz.scp.css */
 .clock[b-r159oljx7e] {
   font-weight: 700;
@@ -250,6 +281,7 @@ button[b-9pfv58i7ry] {
 /* /Components/Sweeper/Sweeper.razor.rz.scp.css */
 .board[b-iujyeoduo1] {
     background-color: black;
+    color: black;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -423,6 +455,7 @@ button[b-9pfv58i7ry] {
     flex-direction: column;
     align-items: center;
     padding-top: .2rem;
+    color: var(--var-icon-color);
 }
 
 p[b-d5cq4f9gw4] {
@@ -439,21 +472,21 @@ div[b-7s88eiu98j] {
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: darkblue;
-    border: 3px solid darkblue;
+    background-color: var(--var-window-color);
+    border: 3px solid var(--var-window-color);
     min-width: 200px;
 }
 
 .window-bar[b-7s88eiu98j] {
     width: 100%;
     height: var(--window-bar-height);
-    background-color: darkblue;
+    background-color: var(--var-window-color);
     display: flex;
     align-items: center;
 }
 
     .window-bar > span[b-7s88eiu98j] {
-        color: #fffaf0;
+        color: var(--var-window-font-color);
         padding-left: .6rem;
     }
 
@@ -488,7 +521,7 @@ div[b-7s88eiu98j] {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: white;
+    background-color: var(--var-window-content-color);
 }
 
 .window-resize[b-7s88eiu98j] {
@@ -551,8 +584,7 @@ div[b-7s88eiu98j] {
     height: 52px;
     padding: .2rem .8rem;
 
-    background-color: lightgray;
-    background: lightgray;
+    background-color: var(--var-toolbar-color);
 
     display: flex;
     flex-direction: row;
