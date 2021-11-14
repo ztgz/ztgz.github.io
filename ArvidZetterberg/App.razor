@@ -1,21 +1,24 @@
 ﻿@inject IJSRuntime jsRuntime
 @inject WindowStore WindowStore
+@inject SettingsStore SettingsStore
 
-<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        @if (isLoaded)
-        {
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-        }
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+<div style="@($"background-color: {SettingsStore.BackgroundColor}; min-height: 100vh;  --var-window-color: {SettingsStore.WindowColor};")">
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            @if (isLoaded)
+            {
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            }
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</div>
 
 @code {
     bool isLoaded = false;
@@ -26,5 +29,7 @@
         WindowStore.IsMobile = isMobile;
         isLoaded = true;
         await base.OnInitializedAsync();
+
+        SettingsStore.Subscribe(StateHasChanged);
     }
 }

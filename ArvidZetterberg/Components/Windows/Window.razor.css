@@ -8,15 +8,15 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: darkblue;
-    border: 3px solid darkblue;
+    background-color: var(--var-window-color);
+    border: 3px solid var(--var-window-color);
     min-width: 200px;
 }
 
 .window-bar {
     width: 100%;
     height: var(--window-bar-height);
-    background-color: darkblue;
+    background-color: var(--var-window-color);
     display: flex;
     align-items: center;
 }
