@@ -3,6 +3,10 @@
 @inject SettingsStore SettingsStore
 
 <div style="@($@"min-height: 100vh;
+                position: relative;
+                overflow: hidden;
+                width: 100vw;
+                height: 100vh;
                 background-color: {SettingsStore.BackgroundColor};
                 color: {SettingsStore.TextColor};
                 --var-window-color: {SettingsStore.WindowColor};

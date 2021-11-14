@@ -1,4 +1,6 @@
 ﻿@inject SettingsStore SettingsStore
+@implements IAsyncDisposable
+@inject IJSRuntime jsRuntime
 
 <div class="app-settings">
     <h3>Choose app colors</h3>
@@ -30,9 +32,54 @@
         <input type="color" value="@SettingsStore.ToolbarColor" @oninput="ChangeToolbarColor" />
         <label>Toolbar color</label>
     </div>
+    @if (cookiesWasAccepted == false)
+    {
+        <p class="cookie-text">To save colors for use in the future, necessary  data needs to be saved in a cookie.</p>
+        <div class="cookie-consent">
+            <input type="checkbox" @bind-value="allowCookies" />
+            <label>Allow necessary data to be stored in a cookie</label>
+        </div>
+    }
+    <button class="save-button" @onclick="Save" disabled="@(!allowCookies)">SAVE</button>
 </div>
 
 @code {
+    private IJSObjectReference? module;
+    private bool allowCookies = false;
+    private bool cookiesWasAccepted = false;
+    protected override async Task OnInitializedAsync()
+    {
+        module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/localstorage.js");
+        await LoadCookieSettings(); 
+        SettingsStore.BackgroundColor = await LoadColor("background", SettingsStore.BackgroundColor);
+        SettingsStore.IconColor = await LoadColor("icon-color", SettingsStore.IconColor);
+        SettingsStore.TextColor = await LoadColor("text-color", SettingsStore.TextColor);
+        SettingsStore.WindowColor = await LoadColor("window-color", SettingsStore.WindowColor);
+        SettingsStore.WindowFontColor = await LoadColor("window-font-color", SettingsStore.WindowFontColor);
+        SettingsStore.WindowContentBackgroundColor = await LoadColor("window-content-background-color", SettingsStore.WindowContentBackgroundColor);
+        SettingsStore.ToolbarColor = await LoadColor("toolbar-color", SettingsStore.ToolbarColor);
+        await base.OnInitializedAsync();
+    }
+
+    async Task LoadCookieSettings()
+    {        
+        if (module is not null)
+        {
+            allowCookies = cookiesWasAccepted = (await module.InvokeAsync<string?>("getFromLocalStorage", "allow-cookie")) == "true"; 
+        }
+    }
+
+    async Task<string> LoadColor(string key, string defaultValue)
+    {
+        if (module is not null)
+        {
+            var value = await module.InvokeAsync<string?>("getFromLocalStorage", key);
+            if (value is not null)
+                return value;
+        }
+        return defaultValue;
+    }
+
     void ChangeWindowColor(ChangeEventArgs eventArgs)
     {
         var color = eventArgs.Value as string;
@@ -67,7 +114,7 @@
         if (color is not null)
             SettingsStore.IconColor = color;
     }    
-    
+
     void ChangeTextColor(ChangeEventArgs eventArgs)
     {
         var color = eventArgs.Value as string;
@@ -80,5 +127,27 @@
         var color = eventArgs.Value as string;
         if (color is not null)
             SettingsStore.ToolbarColor = color;
+    }
+
+    public async Task Save()
+    {
+        if (module is not null)
+        {
+            await module.InvokeVoidAsync("setToLocalStorage", "allow-cookie", true);
+            await module.InvokeVoidAsync("setToLocalStorage", "background", SettingsStore.BackgroundColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "icon-color", SettingsStore.IconColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "text-color", SettingsStore.TextColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "window-color", SettingsStore.WindowColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "window-font-color", SettingsStore.WindowFontColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "window-content-background-color", SettingsStore.WindowContentBackgroundColor);
+            await module.InvokeVoidAsync("setToLocalStorage", "toolbar-color", SettingsStore.ToolbarColor);
+            cookiesWasAccepted = true;
+        }
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+            await module.DisposeAsync();
     }
 }

@@ -15,3 +15,16 @@
     .app-settings > div > input {
         min-width: 50px;
     }
+
+.save-button {
+    min-height: 2rem;
+    padding-top: .4rem;
+}
+
+.cookie-text {
+    margin-bottom: .2rem;
+}
+
+.cookie-consent {
+    display: flex;
+}

@@ -23,12 +23,6 @@ namespace ArvidZetterberg.Store
                 Icon = "fa-question-circle",
                 Name = "Help",
                 StartMeasuers = new() { Width = 400, Height = 450 }
-            },
-            new WindowContent(typeof(AppSettings), new Dictionary<string, object>(){ })
-            {
-                Icon = "fa-question-circle",
-                Name = "Settings",
-                StartMeasuers = new() { Width = 400, Height = 450 }
             }
         };
 
