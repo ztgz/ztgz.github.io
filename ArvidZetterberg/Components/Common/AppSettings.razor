@@ -50,23 +50,8 @@
     protected override async Task OnInitializedAsync()
     {
         module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/localstorage.js");
-        await LoadCookieSettings(); 
-        SettingsStore.BackgroundColor = await LoadColor("background", SettingsStore.BackgroundColor);
-        SettingsStore.IconColor = await LoadColor("icon-color", SettingsStore.IconColor);
-        SettingsStore.TextColor = await LoadColor("text-color", SettingsStore.TextColor);
-        SettingsStore.WindowColor = await LoadColor("window-color", SettingsStore.WindowColor);
-        SettingsStore.WindowFontColor = await LoadColor("window-font-color", SettingsStore.WindowFontColor);
-        SettingsStore.WindowContentBackgroundColor = await LoadColor("window-content-background-color", SettingsStore.WindowContentBackgroundColor);
-        SettingsStore.ToolbarColor = await LoadColor("toolbar-color", SettingsStore.ToolbarColor);
+        allowCookies = cookiesWasAccepted = (await module.InvokeAsync<string?>("getFromLocalStorage", "allow-cookie")) == "true"; 
         await base.OnInitializedAsync();
-    }
-
-    async Task LoadCookieSettings()
-    {        
-        if (module is not null)
-        {
-            allowCookies = cookiesWasAccepted = (await module.InvokeAsync<string?>("getFromLocalStorage", "allow-cookie")) == "true"; 
-        }
     }
 
     async Task<string> LoadColor(string key, string defaultValue)

@@ -1,46 +1,83 @@
-﻿@inject IJSRuntime jsRuntime
+﻿@implements IAsyncDisposable
+@inject IJSRuntime jsRuntime
 @inject WindowStore WindowStore
 @inject SettingsStore SettingsStore
 
-<div style="@($@"min-height: 100vh;
-                position: relative;
-                overflow: hidden;
-                width: 100vw;
-                height: 100vh;
-                background-color: {SettingsStore.BackgroundColor};
-                color: {SettingsStore.TextColor};
-                --var-window-color: {SettingsStore.WindowColor};
-                --var-window-font-color: {SettingsStore.WindowFontColor};
-                --var-icon-color: {SettingsStore.IconColor};
-                --var-window-content-color: {SettingsStore.WindowContentBackgroundColor};
-                --var-toolbar-color: {SettingsStore.ToolbarColor}")">
-    <Router AppAssembly="@typeof(App).Assembly">
-        <Found Context="routeData">
-            @if (isLoaded)
-            {
+@if (isLoaded)
+{
+    <div style="@($@"min-height: 100vh;
+                    position: relative;
+                    overflow: hidden;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: {SettingsStore.BackgroundColor};
+                    color: {SettingsStore.TextColor};
+                    --var-window-color: {SettingsStore.WindowColor};
+                    --var-window-font-color: {SettingsStore.WindowFontColor};
+                    --var-icon-color: {SettingsStore.IconColor};
+                    --var-window-content-color: {SettingsStore.WindowContentBackgroundColor};
+                    --var-toolbar-color: {SettingsStore.ToolbarColor}")">
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
                 <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
                 <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-            }
-        </Found>
-        <NotFound>
-            <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </NotFound>
-    </Router>
-</div>
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </div>
+}
 
 @code {
     bool isLoaded = false;
+
+    private IJSObjectReference? module;
 
     protected override async Task OnInitializedAsync()
     {
         var isMobile = await jsRuntime.InvokeAsync<bool>("isMobile");
         WindowStore.IsMobile = isMobile;
+        
+        module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/localstorage.js");
+        if ((await module.InvokeAsync<string?>("getFromLocalStorage", "allow-cookie")) == "true")
+        {
+            await LoadSettings();
+        }
+
         isLoaded = true;
         await base.OnInitializedAsync();
-
         SettingsStore.Subscribe(StateHasChanged);
+    }
+
+    async Task LoadSettings()
+    {
+        SettingsStore.BackgroundColor = await LoadColor("background", SettingsStore.BackgroundColor);
+        SettingsStore.IconColor = await LoadColor("icon-color", SettingsStore.IconColor);
+        SettingsStore.TextColor = await LoadColor("text-color", SettingsStore.TextColor);
+        SettingsStore.WindowColor = await LoadColor("window-color", SettingsStore.WindowColor);
+        SettingsStore.WindowFontColor = await LoadColor("window-font-color", SettingsStore.WindowFontColor);
+        SettingsStore.WindowContentBackgroundColor = await LoadColor("window-content-background-color", SettingsStore.WindowContentBackgroundColor);
+        SettingsStore.ToolbarColor = await LoadColor("toolbar-color", SettingsStore.ToolbarColor);
+    }
+
+    async Task<string> LoadColor(string key, string defaultValue)
+    {
+        if (module is not null)
+        {
+            var value = await module.InvokeAsync<string?>("getFromLocalStorage", key);
+            if (value is not null)
+                return value;
+        }
+        return defaultValue;
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+            await module.DisposeAsync();
     }
 }
