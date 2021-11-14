@@ -1,5 +1,84 @@
-﻿<h3>Settings</h3>
+﻿@inject SettingsStore SettingsStore
+
+<div class="app-settings">
+    <h3>Choose app colors</h3>
+    <div>
+        <input type="color" value="@SettingsStore.BackgroundColor" @oninput="ChangeBackgroundColor" />
+        <label>Background color</label>
+    </div>
+    <div>
+        <input type="color" value="@SettingsStore.IconColor" @oninput="ChangeIconColor" />
+        <label>Icon color</label>
+    </div>
+    <div>
+        <input type="color" value="@SettingsStore.TextColor" @oninput="ChangeTextColor" />
+        <label>Default text color</label>
+    </div>
+    <div>
+        <input type="color" value="@SettingsStore.WindowColor" @oninput="ChangeWindowColor"/>
+        <label>Window color</label>
+    </div>
+    <div>
+        <input type="color" value="@SettingsStore.WindowFontColor" @oninput="ChangeWindowFontColor" />
+        <label>Window font color</label>
+    </div>    
+    <div>
+        <input type="color" value="@SettingsStore.WindowContentBackgroundColor" @oninput="ChangeWindowContentColor" />
+        <label>Window background color</label>
+    </div>    
+    <div>
+        <input type="color" value="@SettingsStore.ToolbarColor" @oninput="ChangeToolbarColor" />
+        <label>Toolbar color</label>
+    </div>
+</div>
 
 @code {
+    void ChangeWindowColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.WindowColor = color;
+    }
 
+    void ChangeWindowFontColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.WindowFontColor = color;
+    }
+
+    void ChangeWindowContentColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.WindowContentBackgroundColor = color;
+    }
+
+    void ChangeBackgroundColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.BackgroundColor = color;
+    }
+
+    void ChangeIconColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.IconColor = color;
+    }    
+    
+    void ChangeTextColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.TextColor = color;
+    }    
+
+    void ChangeToolbarColor(ChangeEventArgs eventArgs)
+    {
+        var color = eventArgs.Value as string;
+        if (color is not null)
+            SettingsStore.ToolbarColor = color;
+    }
 }

@@ -2,7 +2,14 @@
 @inject WindowStore WindowStore
 @inject SettingsStore SettingsStore
 
-<div style="@($"background-color: {SettingsStore.BackgroundColor}; min-height: 100vh;  --var-window-color: {SettingsStore.WindowColor};")">
+<div style="@($@"min-height: 100vh;
+                background-color: {SettingsStore.BackgroundColor};
+                color: {SettingsStore.TextColor};
+                --var-window-color: {SettingsStore.WindowColor};
+                --var-window-font-color: {SettingsStore.WindowFontColor};
+                --var-icon-color: {SettingsStore.IconColor};
+                --var-window-content-color: {SettingsStore.WindowContentBackgroundColor};
+                --var-toolbar-color: {SettingsStore.ToolbarColor}")">
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             @if (isLoaded)

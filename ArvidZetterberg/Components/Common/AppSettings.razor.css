@@ -1,0 +1,17 @@
+﻿.app-settings {
+    display: flex;
+    flex-direction: column;
+    padding: .2rem .4rem;
+    gap: .4rem;
+}
+
+.app-settings > div {
+    padding: 0 .8rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+    .app-settings > div > input {
+        min-width: 50px;
+    }

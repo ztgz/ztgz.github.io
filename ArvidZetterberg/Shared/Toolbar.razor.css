@@ -7,8 +7,7 @@
     height: 52px;
     padding: .2rem .8rem;
 
-    background-color: lightgray;
-    background: lightgray;
+    background-color: var(--var-toolbar-color);
 
     display: flex;
     flex-direction: row;
