@@ -52,6 +52,11 @@
     </div>
     <script>
         window.isMobile = () => /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
+        let color = window.localStorage.getItem("background");
+        if (color) {
+            document.body.style.backgroundColor = color;
+            document.style.backgroundColor = color;
+        }
     </script>
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script type="module">
