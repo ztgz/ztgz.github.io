@@ -7,9 +7,9 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "ArvidZetterberg.dll": "sha256-Ve8cl\/Mrft8F+lLqwaW\/IaXHvde326Rto8ymJDhcnb8=",
+      "ArvidZetterberg.dll": "sha256-BXPigBL5Njf7rJv0fkHYOyI8c\/+OLpI8FT6c8a6rsqM=",
       "Microsoft.AspNetCore.Components.dll": "sha256-ze86eTFAIduuIYyjg7O5TmX3YTHYsaT77tP4vLXH+2Y=",
-      "Microsoft.AspNetCore.Components.Web.dll": "sha256-8wKemppetk8SQHd6N2WOfau7TPvHhnKTeWNP2A3s338=",
+      "Microsoft.AspNetCore.Components.Web.dll": "sha256-qJiTpA953d2o6rAHHkA5B5BlbRy\/kQv5PGD4MoL4Ido=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-Ph2ZOl\/LOY2cCUG\/S2iA61YUWIsDlcAHFxzdTG43rPw=",
       "Microsoft.Extensions.Configuration.Abstractions.dll": "sha256-zhFtW4kE16TdrpPne9I1Cu9o0KYzrS50VE9MVSifJg4=",
       "Microsoft.Extensions.Configuration.dll": "sha256-QPR+1IXNcA28b\/gXw3uZ8aRigHIZUJ1KWSH02kkCg7Q=",
