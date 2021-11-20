@@ -10,7 +10,9 @@
 	 z-index: {WindowContainer.GetZIndex(this)};
 	 {CalculateWidth()};
 	 {CalculateHeight()}")
-	 @onclick="SelectWindow">
+	 @onclick="SelectWindow"
+	 @ontouchmove:preventDefault="true"
+	 @ontouchmove:stopPropagation="true">
 		<div class="window-drag-bar"
 		 draggable="true"
 		 @ondrag="HandleDrag"
