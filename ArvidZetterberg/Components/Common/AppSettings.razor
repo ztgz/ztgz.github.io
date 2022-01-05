@@ -4,43 +4,47 @@
 
 <div class="app-settings">
     <h3>Choose app colors</h3>
-    <div>
-        <input type="color" value="@SettingsStore.BackgroundColor" @oninput="ChangeBackgroundColor" />
-        <label>Background color</label>
-    </div>
-    <div>
-        <input type="color" value="@SettingsStore.IconColor" @oninput="ChangeIconColor" />
-        <label>Icon color</label>
-    </div>
-    <div>
-        <input type="color" value="@SettingsStore.TextColor" @oninput="ChangeTextColor" />
-        <label>Default text color</label>
-    </div>
-    <div>
-        <input type="color" value="@SettingsStore.WindowColor" @oninput="ChangeWindowColor"/>
-        <label>Window color</label>
-    </div>
-    <div>
-        <input type="color" value="@SettingsStore.WindowFontColor" @oninput="ChangeWindowFontColor" />
-        <label>Window font color</label>
-    </div>    
-    <div>
-        <input type="color" value="@SettingsStore.WindowContentBackgroundColor" @oninput="ChangeWindowContentColor" />
-        <label>Window background color</label>
-    </div>    
-    <div>
-        <input type="color" value="@SettingsStore.ToolbarColor" @oninput="ChangeToolbarColor" />
-        <label>Toolbar color</label>
-    </div>
-    @if (cookiesWasAccepted == false)
-    {
-        <p class="cookie-text">To save colors for use in the future, necessary  data needs to be saved in a cookie.</p>
-        <div class="cookie-consent">
-            <input type="checkbox" @bind-value="allowCookies" />
-            <label>Allow necessary data to be stored in a cookie</label>
+    <div class="settings-row">
+        <div>
+            <input type="color" value="@SettingsStore.BackgroundColor" @oninput="ChangeBackgroundColor" />
+            <label>Background color</label>
         </div>
-    }
-    <button class="save-button" @onclick="Save" disabled="@(!allowCookies)">SAVE</button>
+        <div>
+            <input type="color" value="@SettingsStore.IconColor" @oninput="ChangeIconColor" />
+            <label>Icon color</label>
+        </div>
+        <div>
+            <input type="color" value="@SettingsStore.TextColor" @oninput="ChangeTextColor" />
+            <label>Default text color</label>
+        </div>
+        <div>
+            <input type="color" value="@SettingsStore.WindowColor" @oninput="ChangeWindowColor"/>
+            <label>Window color</label>
+        </div>
+        <div>
+            <input type="color" value="@SettingsStore.WindowFontColor" @oninput="ChangeWindowFontColor" />
+            <label>Window font color</label>
+        </div>    
+        <div>
+            <input type="color" value="@SettingsStore.WindowContentBackgroundColor" @oninput="ChangeWindowContentColor" />
+            <label>Window background color</label>
+        </div>    
+        <div>
+            <input type="color" value="@SettingsStore.ToolbarColor" @oninput="ChangeToolbarColor" />
+            <label>Toolbar color</label>
+        </div>
+    </div>
+    <div class="submit-row">
+        @if (cookiesWasAccepted == false)
+        {
+            <p class="cookie-text">To save colors for use in the future, necessary  data needs to be saved in a cookie.</p>
+            <div class="cookie-consent">
+                <input type="checkbox" @bind-value="allowCookies" />
+                <label>Allow necessary data to be stored in a cookie</label>
+            </div>
+        }
+        <button class="save-button" @onclick="Save" disabled="@(!allowCookies)">SAVE</button>
+    </div>
 </div>
 
 @code {

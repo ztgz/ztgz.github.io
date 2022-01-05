@@ -3,6 +3,11 @@
     flex-direction: column;
     padding: .2rem .4rem;
     gap: .4rem;
+    min-height: 100%;
+}
+
+h3 {
+    text-align: center;
 }
 
 .app-settings > div {
@@ -12,9 +17,28 @@
     gap: .6rem;
 }
 
-    .app-settings > div > input {
+.settings-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.submit-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-bottom: 1rem;
+}
+
+    .submit-row > div > input {
         min-width: 50px;
     }
+
+button {
+    min-width: 150px;
+}
 
 .save-button {
     min-height: 2rem;
