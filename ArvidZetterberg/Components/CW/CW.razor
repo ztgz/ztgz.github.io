@@ -3,7 +3,13 @@
 		Workplace="Itancan Consulting">
 		Employed as a .NET fullstack developer with interest in Blazor or React frontends.
 </CwItem>
-<CwItem DateText="March 2019 - Now" 
+<CwItem DateText="January 2022 - Now"
+		Position="Fullstack .NET Developer"
+		Workplace="Scania AB (Subconsultant)"
+		Skills="@scaniaSkills">
+		Building and maintaining existing software in .NET
+</CwItem>
+<CwItem DateText="March 2019 - December 2021" 
 		Position="Fullstack .NET Developer" 
 		Workplace="LOTS GROUP AB (Subconsultant)"
 		Skills="@lotsSkills">
@@ -16,6 +22,7 @@
 		Built an E-commerce store from scratch using nopCommerce. Also maintenance work on existing transportation services solution.
 </CwItem>
 @code {
-	string[] lotsSkills = new string[] { ".NET 5/Core API's", "Blazor (since November 2020)", "MSSQL", "Azure", "Azure DEVOPS", "React (until November 2020)", "JavaScript" };
+	string[] lotsSkills = new string[] { ".NET 5/Core API's", "Blazor (since November 2020)", "MSSQL", "Azure", "Azure DEVOPS", "React (until November 2020)", "JavaScript", "SignalR" };
 	string[] itancanSkills = new string[] { ".NET Core", "JavaScript", "nopCommerce", ".NET Framework", "jQuery", "MySQL and MSSQL" };
+	string[] scaniaSkills = new string[] { ".NET 6", "Blazor webassembly", "SignalR", "Azure", "Azure Devops", "Azure functions", "MSSQL" };
 }
