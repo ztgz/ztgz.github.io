@@ -4,6 +4,11 @@
     flex-direction: column;
     padding: .2rem .4rem;
     gap: .4rem;
+    min-height: 100%;
+}
+
+h3[b-2cnznc2b1p] {
+    text-align: center;
 }
 
 .app-settings > div[b-2cnznc2b1p] {
@@ -13,9 +18,28 @@
     gap: .6rem;
 }
 
-    .app-settings > div > input[b-2cnznc2b1p] {
+.settings-row[b-2cnznc2b1p] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.submit-row[b-2cnznc2b1p] {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-bottom: 1rem;
+}
+
+    .submit-row > div > input[b-2cnznc2b1p] {
         min-width: 50px;
     }
+
+button[b-2cnznc2b1p] {
+    min-width: 150px;
+}
 
 .save-button[b-2cnznc2b1p] {
     min-height: 2rem;
