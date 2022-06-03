@@ -17,3 +17,14 @@ EXIT /B 0
 :Publish  
 @echo on
 dotnet publish -r win-x64 --self-contained -p:PublishTrimmed=true -c Release -o docs
+@echo off
+
+FOR /D %%D in (.\docs\wwwroot\*) DO (
+   move %%D .\docs\
+)
+
+FOR %%f in (.\docs\wwwroot\*) DO (
+   move %%f .\docs\
+)
+
+echo Commit changes to github to publish online
